@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Poly Map - InterSurv</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ==============================
+     HEADER
+     ============================== -->
+
+<header class="map-header">
+
+    <button
+            class="back-button"
+            onclick="window.location.href='index.html'">
+        ←
+    </button>
+
+    <h1>Poly Map</h1>
+
+</header>
+
+
+<!-- ==============================
+     MAP
+     ============================== -->
+
+<div id="map"></div>
+<button id="locationButton" class="location-button">
+    📍 My Location
+</button>
+
+<button id="traverseButton" class="traverse-button">
+    TRAVERSE
+</button>
+
+<!-- Control Point Selector -->
+<div class="control-selector">
+    <label for="controlPointSelect">Select Control Point</label>
+
+    <select id="controlPointSelect">
+        <option value="">-- Select a Control Point --</option>
+    </select>
+</div>
+
+<!-- Traverse Panel -->
+<div id="traversePanel" class="traverse-panel">
+
+    <h2>Traverse</h2>
+
+    <p id="traverseStatus">
+        Select control points to create a traverse.
+    </p>
+
+    <div id="traverseResults"></div>
+
+    <button id="clearTraverseButton" class="clear-traverse-button">
+        CLEAR
+    </button>
+
+</div>
+
+
+<!-- ==============================
+     CONTROL POINT INFORMATION
+     ============================== -->
+
+<!-- DETAILS BUTTON -->
+<button id="detailsButton" class="details-button">
+    DETAILS
+</button>
+
+
+<!-- CONTROL POINT INFORMATION -->
+<div id="pointInfo" class="point-info">
+
+</div>
+
+<!-- ==============================
+     INTERSURV JAVASCRIPT
+     ============================== -->
+
+<script src="js/app.js"></script>
+
+
+<!-- ==============================
+     GOOGLE MAPS
+     ============================== -->
+
+<script
+        async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDreBgC1mtd07rDs6bSc7Y33VIykqGG3A0&loading=async&callback=initMap">
+</script>
+
+</body>
+</html>
