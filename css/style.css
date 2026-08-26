@@ -1,0 +1,1750 @@
+/* ==============================
+   INTERSURV HOME PAGE
+   ============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eaf4ff;
+    color: #173568;
+    overflow-x: hidden;
+}
+
+
+/* ==============================
+   CONTOUR LINES
+   ============================== */
+
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    left: -10%;
+    width: 120%;
+    height: 150px;
+    border-top: 2px solid rgba(55, 105, 180, 0.35);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+body::before {
+    top: 170px;
+    transform: rotate(-3deg);
+}
+
+body::after {
+    top: 245px;
+    transform: rotate(4deg);
+}
+
+
+/* ==============================
+   TOP BUTTONS
+   ============================== */
+
+.top-buttons {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+
+    padding: 22px 24px 0;
+}
+
+.icon-button {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+
+    border: 1px solid #d8e1eb;
+    border-radius: 22px;
+
+    background: white;
+
+    font-size: 30px;
+    font-weight: bold;
+
+    color: #000;
+
+    cursor: pointer;
+
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+    transition: transform 0.2s ease;
+}
+
+.icon-button:hover {
+    transform: scale(1.05);
+}
+
+
+/* ==============================
+   HOME CONTENT
+   ============================== */
+
+.home-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(92%, 700px);
+
+    margin: 20px auto 0;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ==============================
+   LOGO
+   ============================== */
+
+.app-logo {
+    width: min(55vw, 360px);
+    max-height: 330px;
+    object-fit: contain;
+    margin-top: -2px;
+}
+
+    object-fit: contain;
+
+    margin-top: 2px;
+}
+
+
+/* ==============================
+   TITLE
+   ============================== */
+
+h1 {
+    margin-top: 12px;
+
+    font-size: clamp(34px, 6vw, 58px);
+
+    line-height: 1.12;
+
+    font-weight: 700;
+
+    color: #173568;
+}
+
+
+/* ==============================
+   BLUE LINE
+   ============================== */
+
+.title-line {
+    width: 165px;
+    height: 6px;
+
+    margin-top: 26px;
+
+    background: #2196e8;
+
+    border-radius: 10px;
+}
+
+
+/* ==============================
+   SUBTITLE
+   ============================== */
+
+.subtitle {
+    margin-top: 18px;
+
+    max-width: 620px;
+
+    font-size: clamp(18px, 3vw, 27px);
+
+    line-height: 1.45;
+
+    color: #526b88;
+}
+
+
+/* ==============================
+   START BUTTON
+   ============================== */
+
+.start-button {
+    position: relative;
+
+    width: min(88vw, 640px);
+    height: 110px;
+
+    margin-top: 15px;
+
+    border: 4px solid #55d7ff;
+    border-radius: 60px;
+
+    background: linear-gradient(
+        90deg,
+        #155de8,
+        #249ee7
+    );
+
+    color: white;
+
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 20px rgba(22, 108, 225, 0.25);
+
+    transition: transform 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+.start-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 12px 25px rgba(22, 108, 225, 0.35);
+}
+
+.button-icon {
+    font-size: 42px;
+}
+
+.arrow {
+    position: absolute;
+    right: 45px;
+
+    font-size: 48px;
+}
+
+
+/* ==============================
+   ADMIN BUTTON
+   ============================== */
+
+.admin-button {
+    width: min(72vw, 540px);
+    height: 82px;
+
+    margin-top: 5px;
+
+    border: 4px solid #1764c5;
+    border-radius: 50px;
+
+    background: white;
+
+    color: #1764c5;
+
+    font-size: clamp(20px, 4vw, 32px);
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.admin-button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* ==============================
+   POLITEKNIK IMAGE
+   ============================== */
+
+.poly-section {
+    position: relative;
+
+    width: 100%;
+
+    margin-top: 0;
+
+    z-index: 1;
+}
+
+
+.poly-image {
+    display: block;
+    width: 110%;
+    height: 550px;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.9;
+}
+
+
+/* ==============================
+   MOBILE
+   ============================== */
+
+@media (max-width: 600px) {
+
+    .top-buttons {
+        padding: 15px 15px 0;
+    }
+
+    .icon-button {
+        width: 54px;
+        height: 54px;
+
+        border-radius: 20px;
+
+        font-size: 27px;
+    }
+
+    .home-content {
+        margin-top: 10px;
+    }
+
+    .app-logo {
+        width: 82vw;
+
+        margin-top: 10px;
+    }
+
+    h1 {
+        margin-top: 5px;
+
+        font-size: 34px;
+    }
+
+    .title-line {
+        margin-top: 20px;
+    }
+
+    .subtitle {
+        padding: 0 15px;
+
+        font-size: 19px;
+    }
+
+    .start-button {
+        height: 92px;
+
+        margin-top: 30px;
+
+        font-size: 30px;
+    }
+
+    .arrow {
+        right: 28px;
+    }
+
+    .admin-button {
+        height: 72px;
+
+        margin-top: 20px;
+
+        font-size: 23px;
+    }
+
+    .poly-image {
+        height: 430px;
+    }
+}
+/* ==============================
+   MAP PAGE
+   ============================== */
+
+.map-body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: #eaf4ff;
+}
+
+.map-header {
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 0 18px;
+
+    background: white;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+
+    position: relative;
+    z-index: 10;
+}
+
+.map-header h1 {
+    margin: 0;
+
+    font-size: 25px;
+
+    color: #173568;
+}
+
+.back-button {
+    width: 48px;
+    height: 48px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #1764c5;
+
+    color: white;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+
+/* GOOGLE MAP */
+
+#map {
+    width: 100%;
+
+    height: calc(100vh - 70px);
+
+    background: #dcecff;
+}
+
+
+/* CONTROL POINT INFORMATION */
+
+.point-info {
+    position: absolute;
+
+    left: 20px;
+    bottom: 20px;
+
+    width: min(90%, 360px);
+
+    padding: 20px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+
+    z-index: 20;
+}
+
+.point-info h2 {
+    margin-bottom: 8px;
+
+    color: #173568;
+}
+
+.point-info p {
+    color: #526b88;
+}
+.navigate-button {
+    width: 100%;
+    padding: 12px 20px;
+
+    margin-top: 12px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #1764c5;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.navigate-button:hover {
+    background: #0f4fa3;
+}
+/* ==============================
+   CONTROL POINT PHOTO
+   ============================== */
+
+.control-point-photo {
+    display: block;
+
+    width: 100%;
+    height: 180px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    margin: 12px 0 16px;
+}
+
+.no-photo {
+    width: 100%;
+    height: 120px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 12px 0 16px;
+
+    border-radius: 12px;
+
+    background: #eaf1f8;
+
+    color: #60758c;
+
+    font-size: 15px;
+}
+/* ==============================
+   CONTROL POINT SELECTOR
+   ============================== */
+
+.control-selector {
+    position: absolute;
+    top: 130px;
+    left: 30px;
+    z-index: 1000;
+
+    background: white;
+    padding: 15px 18px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    min-width: 240px;
+}
+
+.control-selector label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #163d73;
+}
+
+.control-selector select {
+    width: 100%;
+    padding: 10px 12px;
+
+    font-size: 15px;
+
+    border: 2px solid #1e73d8;
+    border-radius: 8px;
+
+    background: white;
+    color: #163d73;
+
+    cursor: pointer;
+}
+/* ==============================
+   CONTROL POINT DROPDOWN
+   ============================== */
+
+.control-selector {
+    position: absolute;
+    top: 135px;
+    left: 30px;
+    z-index: 1000;
+
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+
+    width: 260px;
+}
+
+.control-selector label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 16px;
+    font-weight: bold;
+    color: #163d73;
+}
+
+.control-selector select {
+    width: 100%;
+    padding: 10px;
+
+    font-size: 15px;
+
+    border: 2px solid #1e73d8;
+    border-radius: 8px;
+
+    background: white;
+    color: #163d73;
+
+    cursor: pointer;
+}
+/* ==============================
+   DETAILS BUTTON
+   ============================== */
+
+.details-button {
+    position: absolute;
+
+    right: 30px;
+    bottom: 30px;
+
+    z-index: 1000;
+
+    padding: 12px 22px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: #1764c5;
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.details-button:hover {
+    background: #0f4fa3;
+}
+
+
+/* ==============================
+   HIDE DETAILS BY DEFAULT
+   ============================== */
+
+.point-info {
+    display: none;
+
+    position: absolute;
+
+    left: 30px;
+    bottom: 30px;
+
+    z-index: 1001;
+
+    width: 340px;
+
+    max-height: 70vh;
+
+    overflow-y: auto;
+
+    padding: 20px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+.close-details {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #e9eef5;
+    color: #333;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+/* ==============================
+   MY LOCATION BUTTON
+   ============================== */
+
+.location-button {
+    position: absolute;
+    top: 135px;
+    right: 30px;
+    z-index: 1000;
+
+    padding: 12px 18px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: white;
+    color: #1764c5;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.location-button:hover {
+    background: #f0f6ff;
+}
+
+/* ==============================
+   TRAVERSE BUTTON
+   ============================== */
+
+.traverse-button {
+    position: absolute;
+    top: 190px;
+    right: 30px;
+    z-index: 1000;
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: white;
+    color: #1764c5;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+
+/* =========================================
+   TRAVERSE INFORMATION PANEL
+   ========================================= */
+
+.traverse-panel {
+    position: absolute;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 420px;
+    max-height: 55vh;
+
+    background: white;
+
+    border-radius: 24px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+    padding: 20px;
+
+    overflow-y: auto;
+
+    z-index: 10;
+}
+/* ==============================
+   ADD STATION BUTTON
+   ============================== */
+
+.add-station-button {
+    position: absolute;
+    top: 245px;
+    right: 30px;
+
+    z-index: 1000;
+
+    padding: 12px 20px;
+
+    border: none;
+    border-radius: 25px;
+
+    background: white;
+    color: #1764c5;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+    display: none;
+}
+
+.add-station-button:hover {
+    background: #eef5ff;
+}
+
+
+/* ==============================
+   TRAVERSE STATION LIST
+   ============================== */
+
+.station-list {
+    position: absolute;
+
+    top: 300px;
+    right: 30px;
+
+    z-index: 1000;
+
+    width: 260px;
+
+    max-height: 300px;
+
+    overflow-y: auto;
+
+    padding: 18px;
+
+    background: white;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+
+    display: none;
+}
+
+.station-list h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+
+    color: #163d73;
+
+    font-size: 18px;
+}
+
+.station-list ol {
+    margin: 0;
+    padding-left: 25px;
+}
+
+.station-list li {
+    margin-bottom: 8px;
+
+    color: #333;
+
+    font-size: 15px;
+}
+/* =========================================
+   TRAVERSE MAP LABEL
+   ========================================= */
+
+.traverse-map-label {
+    position: absolute;
+
+    width: 180px;
+    height: 60px;
+
+    pointer-events: none;
+
+    z-index: 1000;
+
+    font-family: Arial, sans-serif;
+
+    text-align: center;
+}
+
+
+/* ==============================
+   LABEL CONTENT
+   ============================== */
+
+.traverse-label-content {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    left: 0;
+    top: 0;
+}
+
+
+/* ==============================
+   BEARING
+   ABOVE THE LINE
+   ============================== */
+
+.traverse-bearing {
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 30px;
+
+    transform: translateX(-50%);
+
+    color: #163d73;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 1px 3px white,
+        1px 0 3px white,
+        -1px 0 3px white,
+        0 -1px 3px white;
+}
+
+
+/* ==============================
+   DISTANCE
+   BELOW THE LINE
+   ============================== */
+
+.traverse-distance {
+    position: absolute;
+
+    left: 50%;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+
+    color: #333;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 1px 3px white,
+        1px 0 3px white,
+        -1px 0 3px white,
+        0 -1px 3px white;
+}
+/* =========================================
+   REMOVE SINGLE STATION
+   ========================================= */
+
+.station-list li {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+
+.remove-station-button {
+    width: 24px;
+
+    height: 24px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #e55353;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+.remove-station-button:hover {
+    background: #c93030;
+}
+/* =========================================
+   FINAL TRAVERSE MAP LABEL
+   ========================================= */
+
+.traverse-map-label {
+    position: absolute;
+
+    width: 220px;
+    height: 70px;
+
+    pointer-events: none;
+
+    z-index: 1000;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    text-align: center;
+}
+
+
+/* =========================================
+   BEARING
+   ABOVE THE TRAVERSE LINE
+   ========================================= */
+
+.traverse-bearing {
+    position: absolute;
+
+    left: 50%;
+    bottom: 34px;
+
+    transform: translateX(-50%);
+
+    color: #163d73;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    background: transparent;
+
+    text-shadow:
+        0 1px 3px rgba(255,255,255,0.95),
+        1px 0 3px rgba(255,255,255,0.95),
+        -1px 0 3px rgba(255,255,255,0.95),
+        0 -1px 3px rgba(255,255,255,0.95);
+}
+
+
+/* =========================================
+   DISTANCE
+   BELOW THE TRAVERSE LINE
+   ========================================= */
+
+.traverse-distance {
+    position: absolute;
+
+    left: 50%;
+    top: 34px;
+
+    transform: translateX(-50%);
+
+    color: #222;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    background: transparent;
+
+    text-shadow:
+        0 1px 3px rgba(255,255,255,0.95),
+        1px 0 3px rgba(255,255,255,0.95),
+        -1px 0 3px rgba(255,255,255,0.95),
+        0 -1px 3px rgba(255,255,255,0.95);
+}
+
+
+/* =========================================
+   TRAVERSE RESULT
+   ========================================= */
+
+.traverse-result {
+    margin-bottom: 12px;
+
+    padding: 14px;
+
+    background: #f1f6fc;
+
+    border-radius: 12px;
+
+    color: #163d73;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   TRAVERSE RESULT HEADER
+   ========================================= */
+
+.traverse-result-header {
+    font-size: 16px;
+
+    color: #163d73;
+}
+
+
+/* =========================================
+   REMOVE STATION BUTTON
+   ========================================= */
+
+.station-list li {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+
+.remove-station-button {
+    width: 30px;
+
+    height: 30px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #e55353;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+}
+
+
+.remove-station-button:hover {
+    background: #c93030;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================
+   DETAILS PHOTO
+   ========================================= */
+
+.control-point-photo {
+    display: block;
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 14px;
+
+    margin: 12px 0 16px;
+}
+
+
+/* =========================================
+   DETAILS CLOSE BUTTON
+   ========================================= */
+
+.close-details {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    width: 34px;
+    height: 34px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #e9eef5;
+
+    color: #333;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+
+.close-details:hover {
+    background: #dce5ef;
+}
+
+
+/* =========================================
+   MOBILE MAP
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .control-selector {
+        left: 15px;
+
+        top: 120px;
+
+        width: 300px;
+
+        max-width: calc(100vw - 30px);
+    }
+
+
+    .location-button {
+        right: 15px;
+
+        top: 120px;
+    }
+
+
+    .traverse-button {
+        right: 15px;
+
+        top: 175px;
+    }
+
+
+    .add-station-button {
+        right: 15px;
+
+        top: 230px;
+    }
+
+
+    .station-list {
+        right: 15px;
+
+        top: 285px;
+
+        width: 240px;
+    }
+
+
+    .traverse-panel {
+        right: 10px;
+
+        bottom: 10px;
+
+        width: calc(100vw - 20px);
+
+        max-height: 45vh;
+    }
+
+
+    .point-info {
+        left: 15px;
+
+        bottom: 15px;
+
+        width: calc(100vw - 30px);
+
+        max-height: 65vh;
+    }
+}
+/* =========================================
+   CONTROL POINT PHOTO + NAME ON MAP
+   ========================================= */
+
+.control-point-overlay {
+
+    position: absolute;
+
+   transform:
+       translate(-50%, calc(-100% - 28px));
+
+    z-index: 500;
+
+    cursor: pointer;
+
+    pointer-events: auto;
+
+    user-select: none;
+}
+
+
+/* =========================================
+   PHOTO + NAME GROUP
+   ========================================= */
+
+.map-control-photo-wrapper {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    width: 120px;
+}
+
+
+/* =========================================
+   CONTROL POINT PHOTO
+   ========================================= */
+
+.map-control-photo {
+
+    display: block;
+
+    width: 120px;
+
+    height: 78px;
+
+    object-fit: cover;
+
+    border-radius: 3px;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0, 0, 0, 0.25);
+
+    background: #eee;
+}
+
+
+/* =========================================
+   CONTROL POINT NAME
+   ========================================= */
+
+.map-control-name {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 90px;
+
+    max-width: 120px;
+
+    min-height: 30px;
+
+    margin-top: 2px;
+
+    padding:
+        3px 12px;
+
+    box-sizing: border-box;
+
+    background: white;
+
+    border-radius: 0 0 12px 12px;
+
+    color: #111;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    box-shadow:
+        0 2px 5px
+        rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================
+   NO PHOTO
+   ========================================= */
+
+.no-map-photo {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #777;
+
+    font-size: 12px;
+
+    background: #eeeeee;
+}
+
+
+/* =========================================
+   HOVER
+   ========================================= */
+
+.control-point-overlay:hover {
+
+    z-index: 1000;
+}
+
+
+.control-point-overlay:hover
+.map-control-photo {
+
+    box-shadow:
+        0 3px 9px
+        rgba(0, 0, 0, 0.35);
+
+    transform:
+        scale(1.03);
+}
+
+/* =========================================
+   INTERSURV MOBILE MAP - COMPACT LAYOUT
+   ========================================= */
+
+@media screen and (max-width: 700px) {
+
+    /* Prevent phone browser from enlarging text */
+    html,
+    body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    /* ==============================
+       MAP HEADER
+       ============================== */
+
+    .map-header {
+        height: 58px;
+        padding: 0 12px;
+        gap: 10px;
+    }
+
+    .map-header h1 {
+        font-size: 21px !important;
+        margin: 0 !important;
+    }
+
+    .back-button {
+        width: 42px;
+        height: 42px;
+        font-size: 24px;
+    }
+
+    /* ==============================
+       MAP
+       ============================== */
+
+    #map {
+        height: calc(100vh - 58px);
+        width: 100%;
+    }
+
+    /* ==============================
+       CONTROL POINT SELECTOR
+       ============================== */
+
+    .control-selector {
+        position: absolute;
+
+        top: 72px;
+        left: 10px;
+
+        width: calc(100vw - 20px);
+        max-width: 300px;
+
+        padding: 10px 12px;
+
+        border-radius: 14px;
+
+        gap: 5px;
+    }
+
+    .control-selector label {
+        font-size: 15px !important;
+        line-height: 1.2;
+    }
+
+    .control-selector select {
+        width: 100%;
+
+        height: 42px;
+
+        padding: 7px 10px;
+
+        font-size: 14px !important;
+
+        border-width: 2px;
+        border-radius: 8px;
+    }
+
+    /* ==============================
+       MY LOCATION
+       ============================== */
+
+    .location-button {
+        top: 72px;
+        right: 10px;
+
+        padding: 9px 12px;
+
+        border-radius: 20px;
+
+        font-size: 12px !important;
+    }
+
+    /* ==============================
+       TRAVERSE BUTTON
+       ============================== */
+
+    .traverse-button {
+        top: 122px;
+        right: 10px;
+
+        padding: 9px 13px;
+
+        border-radius: 20px;
+
+        font-size: 12px !important;
+    }
+
+    /* ==============================
+       ADD STATION
+       ============================== */
+
+    .add-station-button {
+        top: 172px;
+        right: 10px;
+
+        padding: 9px 13px;
+
+        border-radius: 20px;
+
+        font-size: 12px !important;
+    }
+
+    /* ==============================
+       STATION LIST
+       ============================== */
+
+    .station-list {
+        top: 220px;
+        right: 10px;
+
+        width: 190px;
+
+        max-width: calc(100vw - 20px);
+        max-height: 180px;
+
+        padding: 12px;
+
+        border-radius: 14px;
+    }
+
+    .station-list h3 {
+        font-size: 15px !important;
+        margin-bottom: 8px;
+    }
+
+    .station-list li {
+        font-size: 13px !important;
+        margin-bottom: 5px;
+    }
+
+    .remove-station-button {
+        width: 25px;
+        height: 25px;
+
+        font-size: 12px !important;
+    }
+
+    /* ==============================
+       TRAVERSE PANEL
+       ============================== */
+
+    .traverse-panel {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        width: auto;
+
+        max-height: 30vh;
+
+        padding: 12px;
+
+        border-radius: 18px;
+
+        overflow-y: auto;
+    }
+
+    .traverse-panel h2 {
+        font-size: 22px !important;
+        margin-bottom: 4px;
+    }
+
+    .traverse-panel p {
+        font-size: 13px !important;
+        margin-bottom: 6px;
+    }
+
+    .traverse-result {
+        margin-bottom: 7px;
+
+        padding: 9px;
+
+        border-radius: 10px;
+
+        font-size: 12px !important;
+        line-height: 1.35;
+    }
+
+    .traverse-result-header {
+        font-size: 13px !important;
+    }
+
+    .clear-traverse-button {
+        padding: 6px 10px;
+
+        font-size: 12px !important;
+    }
+
+    /* ==============================
+       DETAILS BUTTON
+       ============================== */
+
+    .details-button {
+        right: 10px;
+        bottom: 10px;
+
+        padding: 10px 17px;
+
+        border-radius: 22px;
+
+        font-size: 13px !important;
+    }
+
+    /* ==============================
+       POINT INFORMATION
+       ============================== */
+
+    .point-info {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+
+        width: auto;
+
+        max-width: none;
+        max-height: 55vh;
+
+        padding: 14px;
+
+        border-radius: 16px;
+    }
+
+    .point-info h2 {
+        font-size: 20px !important;
+    }
+
+    .point-info p {
+        font-size: 13px !important;
+    }
+
+    /* ==============================
+       PHOTO INSIDE DETAILS
+       ============================== */
+
+    .control-point-photo {
+        width: 100%;
+        height: 150px;
+
+        border-radius: 10px;
+
+        margin: 8px 0 10px;
+    }
+
+    .no-photo {
+        height: 90px;
+
+        font-size: 13px !important;
+    }
+
+    /* ==============================
+       CLOSE DETAILS
+       ============================== */
+
+    .close-details {
+        width: 30px;
+        height: 30px;
+
+        top: 8px;
+        right: 8px;
+
+        font-size: 16px !important;
+    }
+
+    /* ==============================
+       MAP CONTROL POINT PHOTOS
+       ============================== */
+
+    .map-control-photo-wrapper {
+        width: 80px;
+    }
+
+    .map-control-photo {
+        width: 80px;
+        height: 52px;
+
+        border-radius: 3px;
+    }
+
+    .map-control-name {
+        min-width: 65px;
+        max-width: 90px;
+
+        min-height: 23px;
+
+        padding: 3px 6px;
+
+        font-size: 10px !important;
+
+        border-radius: 0 0 8px 8px;
+    }
+
+    /* ==============================
+       TRAVERSE MAP LABELS
+       ============================== */
+
+    .traverse-map-label {
+        width: 130px;
+        height: 50px;
+    }
+
+    .traverse-bearing {
+        font-size: 10px !important;
+        bottom: 24px;
+    }
+
+    .traverse-distance {
+        font-size: 10px !important;
+        top: 24px;
+    }
+
+}
