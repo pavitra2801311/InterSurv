@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>About - InterSurv</title>
+
+    <link
+            rel="stylesheet"
+            href="css/style.css"
+    >
+
+    <style>
+
+        /* =========================================
+           ABOUT PAGE
+           ========================================= */
+
+        .about-content {
+
+            width: min(
+                850px,
+                calc(100% - 40px)
+            );
+
+            margin: 35px auto 50px;
+
+            color: #425D82;
+        }
+
+
+        .about-section {
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            margin-bottom: 22px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        .about-section h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 12px;
+
+            color: #1264D9;
+
+            font-size: 22px;
+        }
+
+
+        .about-section p {
+
+            margin: 0;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================
+           FEATURES
+           ========================================= */
+
+        .feature-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 14px;
+
+            margin-top: 18px;
+        }
+
+
+        .feature-card {
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            background: #f4f8fd;
+
+            border: 1px solid #e0eaf5;
+        }
+
+
+        .feature-card h3 {
+
+            margin: 0 0 6px;
+
+            color: #163d73;
+
+            font-size: 17px;
+        }
+
+
+        .feature-card p {
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            color: #60758F;
+        }
+
+
+        /* =========================================
+           HOW TO USE
+           ========================================= */
+
+        .instruction-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+            margin-top: 18px;
+        }
+
+
+        .instruction-item {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 14px;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            background: #f4f8fd;
+        }
+
+
+        .step-number {
+
+            flex-shrink: 0;
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 50%;
+
+            background: #1264D9;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+        }
+
+
+        .instruction-item p {
+
+            margin: 5px 0 0;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================================
+           VIDEO
+           ========================================= */
+
+        .video-placeholder {
+
+            min-height: 220px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1264D9,
+                    #1688F0
+                );
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 25px;
+
+            box-sizing: border-box;
+        }
+
+
+        .play-icon {
+
+            width: 64px;
+
+            height: 64px;
+
+            border-radius: 50%;
+
+            background: rgba(
+                255,
+                255,
+                255,
+                0.18
+            );
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .video-placeholder h3 {
+
+            margin: 0 0 6px;
+
+            font-size: 20px;
+        }
+
+
+        .video-placeholder p {
+
+            margin: 0;
+
+            font-size: 14px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =========================================
+           SYSTEM INFORMATION
+           ========================================= */
+
+        .about-info {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 12px;
+
+            margin-top: 18px;
+        }
+
+
+        .info-item {
+
+            padding: 15px;
+
+            background: #f4f8fd;
+
+            border-radius: 10px;
+        }
+
+
+        .info-item strong {
+
+            display: block;
+
+            color: #163d73;
+
+            margin-bottom: 4px;
+        }
+
+
+        .info-item span {
+
+            color: #60758F;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================================
+           MOBILE
+           ========================================= */
+
+        @media (max-width: 650px) {
+
+            .about-content {
+
+                width:
+                    calc(100% - 30px);
+
+                margin-top: 25px;
+            }
+
+
+            .about-section {
+
+                padding: 22px;
+
+                border-radius: 15px;
+            }
+
+
+            .feature-grid,
+            .about-info {
+
+                grid-template-columns: 1fr;
+            }
+
+
+            .instruction-item {
+
+                padding: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="inner-page">
+
+
+<!-- =========================================
+     HEADER
+     ========================================= -->
+
+<div class="page-header">
+
+    <button
+            class="back-button"
+            onclick="goHome()"
+            aria-label="Back to Home"
+    >
+        ←
+    </button>
+
+    <h1>
+        About InterSurv
+    </h1>
+
+</div>
+
+
+<main class="about-content">
+
+
+    <!-- =========================================
+         ABOUT INTERSURV
+         ========================================= -->
+
+    <section class="about-section">
+
+        <h2>
+            Intelligent Survey Control Point Navigation
+        </h2>
+
+        <p>
+            InterSurv is a mobile and web-based
+            control point navigation system designed
+            to help users locate and manage survey
+            control points within Politeknik Merlimau
+            Melaka.
+        </p>
+
+    </section>
+
+
+    <!-- =========================================
+         FEATURES
+         ========================================= -->
+
+    <section class="about-section">
+
+        <h2>
+            Key Features
+        </h2>
+
+        <div class="feature-grid">
+
+
+            <div class="feature-card">
+
+                <h3>
+                    📍 Control Point Location
+                </h3>
+
+                <p>
+                    Locate survey control points
+                    directly on the map.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <h3>
+                    📊 Survey Information
+                </h3>
+
+                <p>
+                    View coordinates, elevation,
+                    bearing and distance information.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <h3>
+                    🗺️ Map & Traverse
+                </h3>
+
+                <p>
+                    Visualise selected control points
+                    and their traverse connections.
+                </p>
+
+            </div>
+
+
+            <div class="feature-card">
+
+                <h3>
+                    📷 Control Point Photos
+                </h3>
+
+                <p>
+                    View photographs associated
+                    with individual control points.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         HOW TO USE
+         ========================================= -->
+
+    <section class="about-section">
+
+        <h2>
+            How to Use InterSurv
+        </h2>
+
+
+        <div class="instruction-list">
+
+
+            <div class="instruction-item">
+
+                <div class="step-number">
+                    1
+                </div>
+
+                <p>
+                    Press <strong>START</strong> to
+                    open the Poly Map and begin
+                    searching for control points.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <div class="step-number">
+                    2
+                </div>
+
+                <p>
+                    Search for the required control
+                    point using the search bar.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <div class="step-number">
+                    3
+                </div>
+
+                <p>
+                    Select the control point to view
+                    its location and detailed survey
+                    information.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <p>
+                    Use <strong>NAVIGATE</strong> to
+                    view the direction and information
+                    required to reach the selected
+                    station.
+                </p>
+
+            </div>
+
+
+            <div class="instruction-item">
+
+                <div class="step-number">
+                    5
+                </div>
+
+                <p>
+                    Use <strong>ADD CONTROL POINT</strong>
+                    to select additional points and
+                    view the traverse, bearing and
+                    distance information.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         TUTORIAL
+         ========================================= -->
+
+    <section class="about-section">
+
+        <h2>
+            Tutorial
+        </h2>
+
+
+        <div class="video-placeholder">
+
+            <div class="play-icon">
+                ▶
+            </div>
+
+            <h3>
+                Tutorial Video
+            </h3>
+
+            <p>
+                Video tutorial coming soon
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SYSTEM INFORMATION
+         ========================================= -->
+
+    <section class="about-section">
+
+        <h2>
+            System Information
+        </h2>
+
+
+        <div class="about-info">
+
+
+            <div class="info-item">
+
+                <strong>
+                    Application
+                </strong>
+
+                <span>
+                    InterSurv
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <strong>
+                    Version
+                </strong>
+
+                <span>
+                    1.0.0
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <strong>
+                    Institution
+                </strong>
+
+                <span>
+                    Politeknik Merlimau Melaka
+                </span>
+
+            </div>
+
+
+            <div class="info-item">
+
+                <strong>
+                    System
+                </strong>
+
+                <span>
+                    Survey Control Point Navigation
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script src="js/app.js"></script>
+
+
+</body>
+
+</html>
