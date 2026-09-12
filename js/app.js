@@ -1536,199 +1536,7 @@ async function initMap() {
     }
 
 
-    // ========================================================
-    // CONTROL POINT PHOTO + NAME OVERLAY
-    // ========================================================
 
-    class ControlPointOverlay
-        extends google.maps.OverlayView {
-
-        constructor(
-            point,
-            marker
-        ) {
-
-            super();
-
-            this.point =
-                point;
-
-            this.marker =
-                marker;
-
-            this.div =
-                null;
-
-        }
-
-
-        onAdd() {
-
-            this.div =
-                document.createElement(
-                    "div"
-                );
-
-
-            this.div.className =
-                "control-point-overlay";
-
-
-            const photoUrl =
-                getPhotoUrl(
-                    this.point
-                );
-
-
-            let photoHTML =
-                "";
-
-
-            if (
-                photoUrl
-            ) {
-
-                photoHTML = `
-
-                    <img
-                        src="${photoUrl}"
-                        alt="${this.point.name}"
-                        class="map-control-photo"
-                        onerror="this.style.display='none';"
-                    >
-
-                `;
-
-            } else {
-
-                photoHTML = `
-
-                    <div class="map-control-photo no-map-photo">
-                        No Photo
-                    </div>
-
-                `;
-
-            }
-
-
-            this.div.innerHTML = `
-
-                <div class="map-control-photo-wrapper">
-
-                    ${photoHTML}
-
-                    <div class="map-control-name">
-                        ${this.point.name}
-                    </div>
-
-                </div>
-
-            `;
-
-
-            this.div.addEventListener(
-                "click",
-                (event) => {
-
-                    event.stopPropagation();
-
-
-                    selectedPoint =
-                        this.point;
-
-
-                    google.maps.event.trigger(
-                        this.marker,
-                        "click"
-                    );
-
-                }
-            );
-
-
-            this.getPanes()
-                .floatPane
-                .appendChild(
-                    this.div
-                );
-
-        }
-
-
-        draw() {
-
-            if (
-                !this.div
-            ) {
-
-                return;
-
-            }
-
-
-            const projection =
-                this.getProjection();
-
-
-            if (
-                !projection
-            ) {
-
-                return;
-
-            }
-
-
-            const position =
-                projection.fromLatLngToDivPixel(
-
-                    new google.maps.LatLng(
-
-                        this.point.lat,
-
-                        this.point.lng
-
-                    )
-
-                );
-
-
-            if (
-                !position
-            ) {
-
-                return;
-
-            }
-
-
-            this.div.style.left =
-                position.x + "px";
-
-
-            this.div.style.top =
-                position.y + "px";
-
-        }
-
-
-        onRemove() {
-
-            if (
-                this.div
-            ) {
-
-                this.div.remove();
-
-                this.div =
-                    null;
-
-            }
-
-        }
-
-    }
 
 
     // ========================================================
@@ -1766,22 +1574,6 @@ async function initMap() {
             markers[index] =
                 marker;
 
-
-            const pointOverlay =
-                new ControlPointOverlay(
-                    point,
-                    marker
-                );
-
-
-            pointOverlay.setMap(
-                map
-            );
-
-
-            overlays.push(
-                pointOverlay
-            );
 
 
             // =================================================
@@ -1830,6 +1622,15 @@ async function initMap() {
                         map.setZoom(
                             19
                         );
+
+                    }
+                    if (!traverseMode) {
+
+                        if (detailsButton) {
+
+                            detailsButton.click();
+
+                        }
 
                     }
 
