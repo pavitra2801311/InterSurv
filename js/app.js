@@ -1549,6 +1549,13 @@ async function initMap() {
             index
         ) {
 
+const labelWidth =
+    Math.max(
+        70,
+        point.name.length * 8 + 20
+    );
+
+
 const marker =
     new google.maps.Marker({
 
@@ -1568,24 +1575,88 @@ const marker =
         title:
             point.name,
 
-        label: {
+        icon: {
 
-            text:
-                point.name,
+            url:
+                "data:image/svg+xml;charset=UTF-8," +
+                encodeURIComponent(`
 
-            color:
-                "#123b68",
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="${labelWidth}"
+                        height="70"
+                        viewBox="0 0 ${labelWidth} 70"
+                    >
 
-            fontSize:
-                "12px",
+                        <!-- Name background -->
 
-            fontWeight:
-                "bold"
+                        <rect
+                            x="2"
+                            y="2"
+                            width="${labelWidth - 4}"
+                            height="30"
+                            rx="8"
+                            fill="white"
+                            stroke="#1769d1"
+                            stroke-width="2"
+                        />
+
+                        <!-- Control point name -->
+
+                        <text
+                            x="${labelWidth / 2}"
+                            y="22"
+                            text-anchor="middle"
+                            font-family="Arial, sans-serif"
+                            font-size="12"
+                            font-weight="bold"
+                            fill="#123b68"
+                        >
+                            ${point.name}
+                        </text>
+
+                        <!-- Marker -->
+
+                        <path
+                            d="
+                                M ${labelWidth / 2} 67
+                                C ${labelWidth / 2 - 10} 52,
+                                  ${labelWidth / 2 - 10} 42,
+                                  ${labelWidth / 2} 38
+                                C ${labelWidth / 2 + 10} 42,
+                                  ${labelWidth / 2 + 10} 52,
+                                  ${labelWidth / 2} 67
+                                Z
+                            "
+                            fill="#ea4335"
+                        />
+
+                        <circle
+                            cx="${labelWidth / 2}"
+                            cy="48"
+                            r="4"
+                            fill="white"
+                        />
+
+                    </svg>
+
+                `),
+
+            scaledSize:
+                new google.maps.Size(
+                    labelWidth,
+                    70
+                ),
+
+            anchor:
+                new google.maps.Point(
+                    labelWidth / 2,
+                    70
+                )
 
         }
 
     });
-
             markers[index] =
                 marker;
 
