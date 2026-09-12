@@ -1817,37 +1817,3 @@ h1 {
     color: #334155;
     line-height: 1.5;
 }
-/* =========================================
-   CONTROL POINT MAP NAME
-   ========================================= */
-
-.control-point-name {
-
-    position: absolute;
-
-    transform: translateX(-50%);
-
-    background: white;
-
-    color: #123b68;
-
-    padding: 4px 8px;
-
-    border-radius: 6px;
-
-    font-size: 12px;
-
-    font-weight: bold;
-
-    white-space: nowrap;
-
-    box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.18);
-
-    border: 1px solid #dbe5f0;
-
-    cursor: pointer;
-
-    z-index: 10;
-
-}

@@ -1536,102 +1536,7 @@ async function initMap() {
     }
 
 
-// ========================================================
-// CONTROL POINT NAME OVERLAY
-// ========================================================
 
-class ControlPointNameOverlay
-    extends google.maps.OverlayView {
-
-    constructor(point, marker) {
-
-        super();
-
-        this.point = point;
-        this.marker = marker;
-        this.div = null;
-
-    }
-
-    onAdd() {
-
-        this.div =
-            document.createElement("div");
-
-        this.div.className =
-            "control-point-name";
-
-        this.div.textContent =
-            this.point.name;
-
-        this.div.addEventListener(
-            "click",
-            (event) => {
-
-                event.stopPropagation();
-
-                google.maps.event.trigger(
-                    this.marker,
-                    "click"
-                );
-
-            }
-        );
-
-        this.getPanes()
-            .overlayMouseTarget
-            .appendChild(this.div);
-
-    }
-
-    draw() {
-
-        if (!this.div) {
-            return;
-        }
-
-        const projection =
-            this.getProjection();
-
-        if (!projection) {
-            return;
-        }
-
-        const position =
-            projection.fromLatLngToDivPixel(
-
-                new google.maps.LatLng(
-                    this.point.lat,
-                    this.point.lng
-                )
-
-            );
-
-        if (!position) {
-            return;
-        }
-
-        this.div.style.left =
-            position.x + "px";
-
-        this.div.style.top =
-            (position.y + 25) + "px";
-
-    }
-
-    onRemove() {
-
-        if (this.div) {
-
-            this.div.remove();
-
-            this.div = null;
-
-        }
-
-    }
-
-}
 
 
     // ========================================================
@@ -1644,44 +1549,47 @@ class ControlPointNameOverlay
             index
         ) {
 
-            const marker =
-                new google.maps.Marker({
+const marker =
+    new google.maps.Marker({
 
-                    position: {
+        position: {
 
-                        lat:
-                            point.lat,
+            lat:
+                point.lat,
 
-                        lng:
-                            point.lng
+            lng:
+                point.lng
 
-                    },
+        },
 
-                    map:
-                        map,
+        map:
+            map,
 
-                    title:
-                        point.name
+        title:
+            point.name,
 
-                });
+        label: {
 
+            text:
+                point.name,
+
+            color:
+                "#123b68",
+
+            fontSize:
+                "12px",
+
+            fontWeight:
+                "bold"
+
+        }
+
+    });
 
             markers[index] =
                 marker;
 
-const pointNameOverlay =
-    new ControlPointNameOverlay(
-        point,
-        marker
-    );
 
-pointNameOverlay.setMap(
-    map
-);
-
-overlays.push(
-    pointNameOverlay
-);
 
 
             // =================================================
