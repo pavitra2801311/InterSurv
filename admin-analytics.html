@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>InterSurv Analytics</title>
+
+    <style>
+        /* =========================================
+   CONDITION BY POINT TYPE
+   ========================================= */
+
+.point-type-chart-container {
+    position: relative;
+    width: 100%;
+    height: 420px;
+}
+        /* =========================================
+           MONUMENT HISTORY ANALYSIS
+           ========================================= */
+
+        .history-summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .history-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            padding: 18px;
+
+            background: #f8fafc;
+
+            border-radius: 12px;
+
+            border-left: 5px solid #1769d1;
+        }
+
+        .history-icon {
+            font-size: 25px;
+        }
+
+        .history-label {
+            color: #64748b;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .history-number {
+            margin-top: 5px;
+
+            color: #163d73;
+
+            font-size: 27px;
+
+            font-weight: bold;
+        }
+
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                body {
+                    margin: 0;
+                    font-family: Arial, Helvetica, sans-serif;
+                    background: #f3f7fc;
+                    color: #1e293b;
+                }
+
+
+                /* =========================================
+                   HEADER
+                   ========================================= */
+
+                .header {
+                    height: 75px;
+                    background: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0 28px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+                }
+
+                .header h1 {
+                    margin: 0;
+                    color: #163d73;
+                    font-size: 25px;
+                }
+
+                .back-button {
+                    border: none;
+                    background: #1769d1;
+                    color: white;
+                    padding: 11px 18px;
+                    border-radius: 8px;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+
+                .back-button:hover {
+                    background: #1256ad;
+                }
+
+
+                /* =========================================
+                   MAIN
+                   ========================================= */
+
+                .main {
+                    max-width: 1450px;
+                    margin: auto;
+                    padding: 28px;
+                }
+
+
+                .page-intro {
+                    margin-bottom: 25px;
+                }
+
+                .page-intro h2 {
+                    margin: 0 0 7px;
+                    color: #163d73;
+                    font-size: 25px;
+                }
+
+                .page-intro p {
+                    margin: 0;
+                    color: #64748b;
+                    font-size: 14px;
+                }
+
+
+                /* =========================================
+                   SUMMARY CARDS
+                   ========================================= */
+
+                .summary {
+                    display: grid;
+                    grid-template-columns: repeat(6, 1fr);
+                    gap: 15px;
+                    margin-bottom: 25px;
+                }
+
+                .card {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 15px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,.07);
+                }
+
+                .card-title {
+                    color: #64748b;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+
+                .card-number {
+                    margin-top: 8px;
+                    color: #163d73;
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+
+                /* =========================================
+                   CHART SECTION
+                   ========================================= */
+
+                .chart-section {
+                    background: white;
+                    border-radius: 18px;
+                    padding: 25px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,.07);
+                    margin-bottom: 25px;
+                }
+
+                .chart-section h2 {
+                    margin: 0 0 6px;
+                    color: #163d73;
+                }
+
+                .chart-section p {
+                    margin: 0 0 20px;
+                    color: #64748b;
+                    font-size: 13px;
+                }
+        /* =========================================
+           MAINTENANCE PRIORITY
+           ========================================= */
+
+        .priority-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 16px 18px;
+
+            margin-bottom: 12px;
+
+            border-radius: 12px;
+
+            background: #f8fafc;
+        }
+
+        .priority-item strong {
+            color: #163d73;
+            font-size: 14px;
+        }
+
+        .priority-item p {
+            margin: 5px 0 0 !important;
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+        .priority-item span {
+            min-width: 45px;
+
+            text-align: center;
+
+            padding: 8px 12px;
+
+            border-radius: 20px;
+
+            background: white;
+
+            color: #163d73;
+
+            font-weight: bold;
+        }
+
+        .priority-high {
+            border-left: 5px solid #dc2626;
+        }
+
+        .priority-medium {
+            border-left: 5px solid #eab308;
+        }
+
+        .priority-inspection {
+            border-left: 5px solid #94a3b8;
+        }
+
+        .priority-complete {
+            border-left: 5px solid #2563eb;
+        }
+
+        .priority-good {
+            border-left: 5px solid #16a34a;
+        }
+                .chart-container {
+            position: relative;
+            width: 100%;
+            height: 420px;
+        }
+
+
+                /* =========================================
+                   RESPONSIVE
+                   ========================================= */
+
+                @media (max-width: 1100px) {
+
+                    .summary {
+                        grid-template-columns:
+
+                            repeat(3, 1fr);
+                    }
+                    .history-summary {
+            grid-template-columns:
+                repeat(2, 1fr);
+        }
+
+                }
+
+
+                @media (max-width: 700px) {
+
+                    .header {
+                        padding: 0 15px;
+                    }
+
+                    .point-type-chart-container {
+                     height: 350px;
+                    }
+
+                    .header h1 {
+                        font-size: 18px;
+                    }
+
+                    .main {
+                        padding: 15px;
+                    }
+
+                    .summary {
+                        grid-template-columns: 1fr 1fr;
+                    }
+
+                }
+
+
+                @media (max-width: 450px) {
+
+    .summary {
+        grid-template-columns: 1fr;
+    }
+
+    .history-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .point-type-chart-container {
+        height: 320px;
+    }
+
+}
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+     ========================================= -->
+
+<header class="header">
+
+    <h1>
+        InterSurv Analytics
+    </h1>
+
+    <button
+            class="back-button"
+            id="backButton"
+    >
+        ← BACK TO DASHBOARD
+    </button>
+
+</header>
+
+
+<!-- =========================================
+     MAIN
+     ========================================= -->
+
+<main class="main">
+
+
+    <div class="page-intro">
+
+        <h2>
+            Monument Condition Analysis
+        </h2>
+
+        <p>
+            Overview of current monument conditions
+            recorded in InterSurv.
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         SUMMARY CARDS
+         ========================================= -->
+
+    <section class="summary">
+
+
+        <div class="card">
+
+            <div class="card-title">
+                TOTAL
+            </div>
+
+            <div
+                    class="card-number"
+                    id="totalPoints"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                🟢 GOOD
+            </div>
+
+            <div
+                    class="card-number"
+                    id="goodPoints"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                🟡 MINOR DAMAGE
+            </div>
+
+            <div
+                    class="card-number"
+                    id="minorPoints"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                🟠 DAMAGED
+            </div>
+
+            <div
+                    class="card-number"
+                    id="damagedPoints"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                🔴 CRITICAL
+            </div>
+
+            <div
+                    class="card-number"
+                    id="criticalPoints"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                🔵 REPLACED
+            </div>
+
+            <div
+                    class="card-number"
+                    id="replacedPoints"
+            >
+                0
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================================
+         CONDITION CHART
+         ========================================= -->
+
+    <section class="chart-section">
+
+        <h2>
+            Monument Condition Distribution
+        </h2>
+
+        <p>
+            Current condition of all control points.
+        </p>
+
+        <div class="chart-container">
+            <canvas id="conditionChart"></canvas>
+        </div>
+    </section>
+
+
+    <!-- =========================================
+         MAINTENANCE PRIORITY
+         ========================================= -->
+
+    <section class="chart-section">
+
+        <h2>
+            Maintenance Priority
+        </h2>
+
+        <p>
+            Maintenance and inspection priority based on
+            current monument condition.
+        </p>
+
+        <div id="maintenancePriority">
+
+            <div class="priority-item priority-high">
+
+                <div>
+                    <strong>
+                        🔴 Critical / Replacement Required
+                    </strong>
+
+                    <p>
+                        Immediate attention required.
+                    </p>
+                </div>
+
+                <span id="criticalPriority">
+                0
+            </span>
+
+            </div>
+
+
+            <div class="priority-item priority-high">
+
+                <div>
+                    <strong>
+                        🟠 Damaged
+                    </strong>
+
+                    <p>
+                        Maintenance should be prioritised.
+                    </p>
+                </div>
+
+                <span id="damagedPriority">
+                0
+            </span>
+
+            </div>
+
+
+            <div class="priority-item priority-medium">
+
+                <div>
+                    <strong>
+                        🟡 Minor Damage
+                    </strong>
+
+                    <p>
+                        Monitor condition and plan maintenance.
+                    </p>
+                </div>
+
+                <span id="minorPriority">
+                0
+            </span>
+
+            </div>
+
+
+            <div class="priority-item priority-inspection">
+
+                <div>
+                    <strong>
+                        ⚪ Not Inspected
+                    </strong>
+
+                    <p>
+                        Inspection is required.
+                    </p>
+                </div>
+
+                <span id="inspectionPriority">
+                0
+            </span>
+
+            </div>
+
+
+            <div class="priority-item priority-complete">
+
+                <div>
+                    <strong>
+                        🔵 Replaced
+                    </strong>
+
+                    <p>
+                        Replacement completed.
+                    </p>
+                </div>
+
+                <span id="replacedPriority">
+                0
+            </span>
+
+            </div>
+
+
+            <div class="priority-item priority-good">
+
+                <div>
+                    <strong>
+                        🟢 Good
+                    </strong>
+
+                    <p>
+                        No immediate maintenance required.
+                    </p>
+                </div>
+
+                <span id="goodPriority">
+                0
+            </span>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- =========================================
+         MONUMENT HISTORY ANALYSIS
+         ========================================= -->
+
+    <section class="chart-section">
+
+        <h2>
+            Monument History Analysis
+        </h2>
+
+        <p>
+            Analysis of monument condition changes and
+            maintenance records.
+        </p>
+
+        <div class="history-summary">
+
+            <div class="history-card">
+
+            <span class="history-icon">
+                🔄
+            </span>
+
+                <div>
+
+                    <div class="history-label">
+                        TOTAL STATUS CHANGES
+                    </div>
+
+                    <div
+                            class="history-number"
+                            id="totalHistory"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="history-card">
+
+            <span class="history-icon">
+                ⚠️
+            </span>
+
+                <div>
+
+                    <div class="history-label">
+                        DAMAGE RECORDS
+                    </div>
+
+                    <div
+                            class="history-number"
+                            id="damageHistory"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="history-card">
+
+            <span class="history-icon">
+                🔧
+            </span>
+
+                <div>
+
+                    <div class="history-label">
+                        REPLACEMENTS
+                    </div>
+
+                    <div
+                            class="history-number"
+                            id="replacementHistory"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="history-card">
+
+            <span class="history-icon">
+                📋
+            </span>
+
+                <div>
+
+                    <div class="history-label">
+                        POINTS WITH HISTORY
+                    </div>
+
+                    <div
+                            class="history-number"
+                            id="pointsWithHistory"
+                    >
+                        0
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================================
+         CONDITION BY POINT TYPE
+         ========================================= -->
+
+    <section class="chart-section">
+
+        <h2>
+            Condition by Point Type
+        </h2>
+
+        <p>
+            Distribution of monument conditions according
+            to control point type.
+        </p>
+
+        <div class="point-type-chart-container">
+            <canvas id="pointTypeChart"></canvas>
+        </div>
+
+    </section>
+
+</main>
+
+
+<script type="module">
+
+    /* =========================================
+       FIREBASE
+       ========================================= */
+
+    import {
+        db,
+        auth
+    } from "./js/firebase-config.js";
+
+
+    import {
+        onAuthStateChanged
+    } from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+
+    import {
+        collection,
+        getDocs
+    } from
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
+
+    /* =========================================
+       BACK BUTTON
+       ========================================= */
+
+    document.getElementById(
+        "backButton"
+    ).addEventListener(
+        "click",
+        function () {
+
+            window.location.href =
+                "admin-dashboard.html";
+
+        }
+    );
+
+
+    /* =========================================
+       AUTHENTICATION
+       ========================================= */
+
+    onAuthStateChanged(
+        auth,
+        function (user) {
+
+            if (!user) {
+
+                window.location.href =
+                    "admin.html";
+
+                return;
+
+            }
+
+
+            loadAnalytics();
+
+        }
+    );
+
+
+    /* =========================================
+       LOAD ANALYTICS
+       ========================================= */
+
+    async function loadAnalytics() {
+
+        try {
+
+            const controlPointsRef =
+                collection(
+                    db,
+                    "control_points"
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    controlPointsRef
+                );
+
+
+            const controlPoints =
+                snapshot.docs.map(
+                    function (document) {
+
+                        return {
+                            id: document.id,
+                            ...document.data()
+                        };
+
+                    }
+                );
+
+
+            calculateConditionSummary(
+                controlPoints
+            );
+
+
+            createConditionChart(
+                controlPoints
+            );
+
+            loadHistoryAnalytics(
+                controlPoints
+            );
+
+            createPointTypeChart(
+            controlPoints
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Analytics error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================================
+       CONDITION SUMMARY
+       ========================================= */
+
+    function calculateConditionSummary(
+        controlPoints
+    ) {
+
+        let good = 0;
+        let minor = 0;
+        let damaged = 0;
+        let critical = 0;
+        let replaced = 0;
+
+
+        controlPoints.forEach(
+            function (point) {
+
+                const status =
+                    point.monumentStatus ||
+                    "Not Inspected";
+
+
+                if (status === "Good") {
+
+                    good++;
+
+                }
+                else if (
+                    status === "Minor Damage"
+                ) {
+
+                    minor++;
+
+                }
+                else if (
+                    status === "Damaged"
+                ) {
+
+                    damaged++;
+
+                }
+                else if (
+                    status ===
+                    "Critical / Replacement Required"
+                ) {
+
+                    critical++;
+
+                }
+                else if (
+                    status === "Replaced"
+                ) {
+
+                    replaced++;
+
+                }
+
+            }
+        );
+
+
+        document.getElementById(
+            "totalPoints"
+        ).textContent =
+            controlPoints.length;
+
+
+        document.getElementById(
+            "goodPoints"
+        ).textContent =
+            good;
+
+
+        document.getElementById(
+            "minorPoints"
+        ).textContent =
+            minor;
+
+
+        document.getElementById(
+            "damagedPoints"
+        ).textContent =
+            damaged;
+
+
+        document.getElementById(
+            "criticalPoints"
+        ).textContent =
+            critical;
+
+
+        document.getElementById(
+            "replacedPoints"
+        ).textContent =
+            replaced;
+
+            document.getElementById(
+    "criticalPriority"
+).textContent =
+    critical;
+
+document.getElementById(
+    "damagedPriority"
+).textContent =
+    damaged;
+
+document.getElementById(
+    "minorPriority"
+).textContent =
+    minor;
+
+document.getElementById(
+    "inspectionPriority"
+).textContent =
+    controlPoints.length -
+    good -
+    minor -
+    damaged -
+    critical -
+    replaced;
+
+document.getElementById(
+    "replacedPriority"
+).textContent =
+    replaced;
+
+document.getElementById(
+    "goodPriority"
+).textContent =
+    good;
+
+    }
+
+
+    /* =========================================
+       CONDITION CHART
+       ========================================= */
+
+   function createConditionChart(
+    controlPoints
+) {
+
+    const counts = {
+
+        Good: 0,
+
+        "Minor Damage": 0,
+
+        Damaged: 0,
+
+        "Critical / Replacement Required": 0,
+
+        Replaced: 0,
+
+        "Not Inspected": 0
+
+    };
+
+
+    controlPoints.forEach(
+        function (point) {
+
+            const status =
+                point.monumentStatus ||
+                "Not Inspected";
+
+
+            if (
+                counts[status] !== undefined
+            ) {
+
+                counts[status]++;
+
+            }
+
+        }
+    );
+
+
+    const ctx =
+        document.getElementById(
+            "conditionChart"
+        );
+
+
+    new Chart(ctx, {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: [
+                "Good",
+                "Minor Damage",
+                "Damaged",
+                "Critical / Replacement Required",
+                "Replaced",
+                "Not Inspected"
+            ],
+
+            datasets: [{
+
+                data: [
+                    counts.Good,
+                    counts["Minor Damage"],
+                    counts.Damaged,
+                    counts[
+                        "Critical / Replacement Required"
+                    ],
+                    counts.Replaced,
+                    counts["Not Inspected"]
+                ],
+
+                borderWidth: 2
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    position: "right"
+
+                },
+
+                tooltip: {
+
+                    callbacks: {
+
+                        label: function(context) {
+
+                            return (
+                                context.label +
+                                ": " +
+                                context.raw
+                            );
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+
+}
+/* =========================================
+   MONUMENT HISTORY ANALYSIS
+   ========================================= */
+
+async function loadHistoryAnalytics(
+    controlPoints
+) {
+
+    let totalHistory = 0;
+    let damageHistory = 0;
+    let replacementHistory = 0;
+    let pointsWithHistory = 0;
+
+
+    for (
+        const point of controlPoints
+    ) {
+
+        try {
+
+            const historyRef =
+                collection(
+                    db,
+                    "control_points",
+                    point.id,
+                    "monument_history"
+                );
+
+
+            const snapshot =
+                await getDocs(
+                    historyRef
+                );
+
+
+            if (!snapshot.empty) {
+
+                pointsWithHistory++;
+
+            }
+
+
+            snapshot.forEach(
+                function (document) {
+
+                    const record =
+                        document.data();
+
+
+                    totalHistory++;
+
+
+                    if (
+                        record.status ===
+                        "Minor Damage" ||
+
+                        record.status ===
+                        "Damaged" ||
+
+                        record.status ===
+                        "Critical / Replacement Required"
+                    ) {
+
+                        damageHistory++;
+
+                    }
+
+
+                    if (
+                        record.status ===
+                        "Replaced"
+                    ) {
+
+                        replacementHistory++;
+
+                    }
+
+                }
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "History error for point:",
+                point.id,
+                error
+            );
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "totalHistory"
+    ).textContent =
+        totalHistory;
+
+
+    document.getElementById(
+        "damageHistory"
+    ).textContent =
+        damageHistory;
+
+
+    document.getElementById(
+        "replacementHistory"
+    ).textContent =
+        replacementHistory;
+
+
+    document.getElementById(
+        "pointsWithHistory"
+    ).textContent =
+        pointsWithHistory;
+
+}
+    /* =========================================
+   CONDITION BY POINT TYPE
+   ========================================= */
+
+function createPointTypeChart(
+    controlPoints
+) {
+
+    const pointTypes = {};
+
+    controlPoints.forEach(
+        function (point) {
+
+            const type =
+                point.pointType ||
+                "Unknown";
+
+            const status =
+                point.monumentStatus ||
+                "Not Inspected";
+
+
+            if (!pointTypes[type]) {
+
+                pointTypes[type] = {
+
+                    Good: 0,
+
+                    "Minor Damage": 0,
+
+                    Damaged: 0,
+
+                    "Critical / Replacement Required": 0,
+
+                    Replaced: 0,
+
+                    "Not Inspected": 0
+
+                };
+
+            }
+
+
+            if (
+                pointTypes[type][status]
+                !== undefined
+            ) {
+
+                pointTypes[type][status]++;
+
+            }
+
+        }
+    );
+
+
+    const labels =
+        Object.keys(pointTypes);
+
+
+    const ctx =
+        document.getElementById(
+            "pointTypeChart"
+        );
+
+
+    new Chart(ctx, {
+
+        type: "bar",
+
+        data: {
+
+            labels: labels,
+
+            datasets: [
+
+                {
+                    label: "Good",
+
+                    data: labels.map(
+                        function (type) {
+                            return pointTypes[type].Good;
+                        }
+                    )
+                },
+
+
+                {
+                    label: "Minor Damage",
+
+                    data: labels.map(
+                        function (type) {
+                            return pointTypes[type][
+                                "Minor Damage"
+                            ];
+                        }
+                    )
+                },
+
+
+                {
+                    label: "Damaged",
+
+                    data: labels.map(
+                        function (type) {
+                            return pointTypes[type].Damaged;
+                        }
+                    )
+                },
+
+
+                {
+                    label:
+                        "Critical / Replacement Required",
+
+                    data: labels.map(
+                        function (type) {
+                            return pointTypes[type][
+                                "Critical / Replacement Required"
+                            ];
+                        }
+                    )
+                },
+
+
+                {
+                    label: "Replaced",
+
+                    data: labels.map(
+                        function (type) {
+                            return pointTypes[type].Replaced;
+                        }
+                    )
+                },
+
+
+                {
+                    label: "Not Inspected",
+
+                    data: labels.map(
+                        function (type) {
+                            return pointTypes[type][
+                                "Not Inspected"
+                            ];
+                        }
+                    )
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    ticks: {
+
+                        precision: 0
+
+                    }
+
+                }
+
+            },
+
+            plugins: {
+
+                legend: {
+
+                    position: "bottom"
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>
