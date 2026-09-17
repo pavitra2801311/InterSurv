@@ -249,14 +249,18 @@ async function initMap() {
                                 data.easting
                             ),
 
-                        height:
-                            Number(
-                                data.elevation
-                            ),
+                       height:
+                           Number(
+                               data.elevation
+                           ),
 
-                        description:
-                            data.description ||
-                            "",
+                       monumentStatus:
+                           data.monumentStatus ||
+                           "Good",
+
+                       description:
+                           data.description ||
+                           "",
 
                         // Firebase photo
 
@@ -1970,6 +1974,18 @@ const marker =
 
                         ${selectedPoint.height}
                         m
+
+                    </p>
+
+                    <p>
+
+                        <strong>
+                            Monument Status:
+                        </strong>
+
+                        <br>
+
+                        ${selectedPoint.monumentStatus}
 
                     </p>
 

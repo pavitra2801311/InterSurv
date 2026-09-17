@@ -1,4 +1,4 @@
-```<html>
+<html>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -366,6 +366,22 @@
         }
 
         .delete:hover {
+            background: #c93f3f;
+        }
+
+        .delete-history-btn {
+            border: none;
+            background: #e55353;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .delete-history-btn:hover {
             background: #c93f3f;
         }
 
@@ -860,7 +876,7 @@
      HEADER
      ========================================= -->
 
-<<header class="header">
+<header class="header">
     <h1>InterSurv Admin Dashboard</h1>
 
     <div>
@@ -1127,19 +1143,43 @@
             </div>
 
             <div class="field">
-                <label for="monumentStatus">Monument Status</label>
 
-                <select id="monumentStatus">
-                    <option value="Not Inspected">⚪ Not Inspected</option>
-                    <option value="Good">🟢 Good</option>
-                    <option value="Minor Damage">🟡 Minor Damage</option>
-                    <option value="Damaged">🟠 Damaged</option>
-                    <option value="Critical / Replacement Required">🔴 Critical / Replacement Required</option>
-                    <option value="Replaced">🔵 Replaced</option>
-                </select>
+                <label for="monumentStatus">
+                    Monument Status
+                </label>
+
+                <div style="
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    ">
+
+                    <select
+                            id="monumentStatus"
+                            style="flex: 1;"
+                    >
+                        <option value="Not Inspected">⚪ Not Inspected</option>
+                        <option value="Good">🟢 Good</option>
+                        <option value="Minor Damage">🟡 Minor Damage</option>
+                        <option value="Damaged">🟠 Damaged</option>
+                        <option value="Critical / Replacement Required">🔴 Critical / Replacement Required</option>
+                        <option value="Replaced">🔵 Replaced</option>
+                    </select>
+
+                    <input
+                            type="date"
+                            id="observationDate"
+                            title="Observation Date"
+                            style="
+                width: 45px;
+                padding: 8px;
+                cursor: pointer;
+            "
+                    >
+
+                </div>
+
             </div>
-
-
             <!-- LATITUDE -->
 
             <div class="field">
@@ -2517,7 +2557,7 @@ document
        OPEN EDIT
        ========================================= */
 
-    function openEdit(
+    async function openEdit(
         id
     ) {
 
@@ -2570,6 +2610,91 @@ document
              "monumentStatus"
         ).value =
          point.monumentStatus || "Not Inspected";
+
+        // Load the latest saved observation date.
+        document.getElementById(
+            "observationDate"
+        ).value = "";
+
+        try {
+
+            const historySnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "control_points",
+                        id,
+                        "monument_history"
+                    )
+                );
+
+            const historyRecords =
+                historySnapshot.docs
+                    .map(
+                        function (historyDoc) {
+                            return {
+                                id: historyDoc.id,
+                                ...historyDoc.data()
+                            };
+                        }
+                    )
+                    .sort(
+                        function (a, b) {
+
+                            const dateA =
+                                a.date?.toDate
+                                    ? a.date.toDate()
+                                    : new Date(0);
+
+                            const dateB =
+                                b.date?.toDate
+                                    ? b.date.toDate()
+                                    : new Date(0);
+
+                            return dateB - dateA;
+                        }
+                    );
+
+            const latestRecord =
+                historyRecords[0];
+
+            if (
+                latestRecord &&
+                latestRecord.observationDate?.toDate
+            ) {
+
+                const observationDate =
+                    latestRecord.observationDate
+                        .toDate();
+
+                const year =
+                    observationDate.getFullYear();
+
+                const month =
+                    String(
+                        observationDate.getMonth() + 1
+                    ).padStart(2, "0");
+
+                const day =
+                    String(
+                        observationDate.getDate()
+                    ).padStart(2, "0");
+
+                document.getElementById(
+                    "observationDate"
+                ).value =
+                    `${year}-${month}-${day}`;
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Could not load observation date:",
+                error
+            );
+
+        }
+
 
 
         document.getElementById(
@@ -3696,13 +3821,30 @@ document
     // Record history only when status changes
     if (newStatus !== oldStatus) {
 
+        const observationDateValue =
+            document.getElementById(
+                "observationDate"
+            ).value;
+
+        if (!observationDateValue) {
+
+            setFormValidationError(
+                "Please select the Observation Date."
+            );
+
+            saveButton.disabled = false;
+
+            return;
+        }
+
         await addMonumentHistory(
             editingId,
             newStatus,
             "Monument status changed from " +
             oldStatus +
             " to " +
-            newStatus
+            newStatus,
+            observationDateValue
         );
 
     }
@@ -3749,225 +3891,6 @@ document
    VIEW MONUMENT HISTORY
 ========================================= */
 
-window.viewHistory = async function(pointId) {
-
-    const modal =
-        document.getElementById(
-            "historyModal"
-        );
-
-    const content =
-        document.getElementById(
-            "historyContent"
-        );
-
-    const title =
-        document.getElementById(
-            "historyTitle"
-        );
-
-    const subtitle =
-        document.getElementById(
-            "historySubtitle"
-        );
-
-
-    const point =
-        controlPoints.find(
-            function(item) {
-                return item.id === pointId;
-            }
-        );
-
-
-    if (!point) {
-        return;
-    }
-
-
-    title.textContent =
-        "Monument History";
-
-
-    subtitle.textContent =
-        point.pointCode +
-        " • " +
-        (point.pointType || "Control Point");
-
-
-    modal.style.display =
-        "flex";
-
-
-    content.innerHTML =
-        "<p>Loading history...</p>";
-
-
-    try {
-
-        const historyRef =
-            collection(
-                db,
-                "control_points",
-                pointId,
-                "monument_history"
-            );
-
-
-        const snapshot =
-            await getDocs(
-                historyRef
-            );
-
-
-        if (snapshot.empty) {
-
-            content.innerHTML = `
-                <div class="history-item">
-                    <div class="history-status">
-                        No history available
-                    </div>
-
-                    <div class="history-remarks">
-                        No monument status changes
-                        have been recorded yet.
-                    </div>
-                </div>
-            `;
-
-            return;
-        }
-
-
-        const historyRecords =
-            [];
-
-
-        snapshot.forEach(
-            function(docSnapshot) {
-
-                historyRecords.push({
-
-                    id:
-                        docSnapshot.id,
-
-                    ...docSnapshot.data()
-
-                });
-
-            }
-        );
-
-
-        historyRecords.sort(
-            function(a, b) {
-
-                const dateA =
-                    a.date?.toDate
-                        ? a.date.toDate()
-                        : new Date(0);
-
-                const dateB =
-                    b.date?.toDate
-                        ? b.date.toDate()
-                        : new Date(0);
-
-                return dateB - dateA;
-
-            }
-        );
-
-
-        content.innerHTML =
-            historyRecords
-                .map(
-                    function(record) {
-
-                        const date =
-                            record.date?.toDate
-                                ? record.date.toDate()
-                                : null;
-
-
-                        const formattedDate =
-                            date
-                                ? date.toLocaleString(
-                                      "en-MY",
-                                      {
-                                          dateStyle:
-                                              "medium",
-                                          timeStyle:
-                                              "short"
-                                      }
-                                  )
-                                : "Date unavailable";
-
-
-                        return `
-                            <div class="history-item">
-
-                                <div class="history-status">
-                                    ${getStatusBadge(
-                                        record.status
-                                    )}
-                                </div>
-
-                                <div class="history-date">
-                                    ${formattedDate}
-                                </div>
-
-                                <div class="history-remarks">
-                                    ${
-                                        escapeHTML(
-                                            record.remarks ||
-                                            "No remarks"
-                                        )
-                                    }
-                                </div>
-
-                            </div>
-                        `;
-
-                    }
-                )
-                .join("");
-
-
-    } catch (error) {
-
-        console.error(
-            "History loading error:",
-            error
-        );
-
-
-        content.innerHTML = `
-            <div class="history-item">
-
-                <div class="history-status">
-                    Unable to load history
-                </div>
-
-                <div class="history-remarks">
-                    ${escapeHTML(
-                        error.message
-                    )}
-                </div>
-
-            </div>
-        `;
-
-    }
-
-};
-window.closeHistoryModal =
-    function() {
-
-        document.getElementById(
-            "historyModal"
-        ).style.display = "none";
-
-    };
 
             closeModal();
 
@@ -4116,10 +4039,11 @@ window.closeHistoryModal =
         );
 
     }
-    async function addMonumentHistory(
+   async function addMonumentHistory(
     pointId,
     statusValue,
-    remarksValue
+    remarksValue,
+    observationDateValue
 ) {
 
     const historyRef =
@@ -4133,19 +4057,87 @@ window.closeHistoryModal =
     await addDoc(
         historyRef,
         {
-            status: statusValue,
-            remarks: remarksValue || "",
-            date: serverTimestamp()
+            status:
+                statusValue,
+
+            remarks:
+                remarksValue || "",
+
+            observationDate:
+                observationDateValue
+                    ? new Date(
+                        observationDateValue +
+                        "T12:00:00"
+                    )
+                    : new Date(),
+
+            // Automatic date/time when the admin updates the status.
+            date:
+                serverTimestamp()
         }
     );
 
 }
 
+window.deleteMonumentHistory = async function(
+    pointId,
+    historyId
+) {
+
+    const confirmed =
+        window.confirm(
+            "Delete this monument history record?\n\nThis action cannot be undone."
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        await deleteDoc(
+            doc(
+                db,
+                "control_points",
+                pointId,
+                "monument_history",
+                historyId
+            )
+        );
+
+        window.alert(
+            "History record deleted successfully."
+        );
+
+        await window.viewHistory(
+            pointId
+        );
+
+    } catch (error) {
+
+        console.error(
+            "History delete error:",
+            error
+        );
+
+        window.alert(
+            "Failed to delete history record: " +
+            error.message
+        );
+
+    }
+
+};
+
+
 /* =========================================
    VIEW MONUMENT HISTORY
-   ========================================= */
+========================================= */
 
-window.viewHistory = async function(pointId) {
+window.viewHistory = async function(
+    pointId
+) {
+
     const historyModal =
         document.getElementById(
             "historyModal"
@@ -4166,7 +4158,6 @@ window.viewHistory = async function(pointId) {
             "historySubtitle"
         );
 
-
     const point =
         controlPoints.find(
             function (item) {
@@ -4174,26 +4165,21 @@ window.viewHistory = async function(pointId) {
             }
         );
 
-
     if (!point) {
         return;
     }
 
-
     historyTitle.textContent =
         "Monument History";
-
 
     historySubtitle.textContent =
         point.pointCode +
         " • " +
         (point.pointType || "Control Point");
 
-
     historyModal.classList.add(
         "active"
     );
-
 
     historyContent.innerHTML = `
         <p
@@ -4207,7 +4193,6 @@ window.viewHistory = async function(pointId) {
         </p>
     `;
 
-
     try {
 
         const historyRef =
@@ -4218,12 +4203,10 @@ window.viewHistory = async function(pointId) {
                 "monument_history"
             );
 
-
         const snapshot =
             await getDocs(
                 historyRef
             );
-
 
         if (snapshot.empty) {
 
@@ -4240,28 +4223,24 @@ window.viewHistory = async function(pointId) {
             `;
 
             return;
-
         }
-
 
         const historyRecords = [];
 
-
         snapshot.forEach(
-            function (document) {
+            function (historyDoc) {
 
                 historyRecords.push({
 
                     id:
-                        document.id,
+                        historyDoc.id,
 
-                    ...document.data()
+                    ...historyDoc.data()
 
                 });
 
             }
         );
-
 
         historyRecords.sort(
             function (a, b) {
@@ -4271,47 +4250,53 @@ window.viewHistory = async function(pointId) {
                         ? a.date.toDate()
                         : new Date(0);
 
-
                 const dateB =
                     b.date?.toDate
                         ? b.date.toDate()
                         : new Date(0);
-
 
                 return dateB - dateA;
 
             }
         );
 
-
         historyContent.innerHTML =
             historyRecords
                 .map(
                     function (record) {
 
-                        let formattedDate =
-                            "Date unavailable";
+                        const observationDate =
+                            record.observationDate?.toDate
+                                ? record.observationDate.toDate()
+                                : null;
 
-
-                        if (
+                        const updatedDate =
                             record.date?.toDate
-                        ) {
+                                ? record.date.toDate()
+                                : null;
 
-                            formattedDate =
-                                record.date
-                                    .toDate()
-                                    .toLocaleString(
-                                        "en-MY",
-                                        {
-                                            dateStyle:
-                                                "medium",
-                                            timeStyle:
-                                                "short"
-                                        }
-                                    );
+                        const formattedObservationDate =
+                            observationDate
+                                ? observationDate.toLocaleDateString(
+                                    "en-MY",
+                                    {
+                                        day: "2-digit",
+                                        month: "2-digit",
+                                        year: "numeric"
+                                    }
+                                )
+                                : "Date unavailable";
 
-                        }
-
+                        const formattedUpdatedDate =
+                            updatedDate
+                                ? updatedDate.toLocaleString(
+                                    "en-MY",
+                                    {
+                                        dateStyle: "medium",
+                                        timeStyle: "short"
+                                    }
+                                )
+                                : "Date unavailable";
 
                         return `
 
@@ -4335,17 +4320,30 @@ window.viewHistory = async function(pointId) {
                                     )}
                                 </div>
 
-
                                 <div
                                     style="
                                         font-size:12px;
                                         color:#64748b;
                                         margin-bottom:8px;
+                                        line-height:1.7;
                                     "
                                 >
-                                    ${formattedDate}
-                                </div>
 
+                                    <strong>
+                                        Observation Date:
+                                    </strong>
+
+                                    ${formattedObservationDate}
+
+                                    <br>
+
+                                    <strong>
+                                        Updated:
+                                    </strong>
+
+                                    ${formattedUpdatedDate}
+
+                                </div>
 
                                 <div
                                     style="
@@ -4362,6 +4360,19 @@ window.viewHistory = async function(pointId) {
                                     }
                                 </div>
 
+                                <button
+                                    type="button"
+                                    class="delete-history-btn"
+                                    onclick="
+                                        deleteMonumentHistory(
+                                            '${escapeAttribute(pointId)}',
+                                            '${escapeAttribute(record.id)}'
+                                        )
+                                    "
+                                >
+                                    DELETE
+                                </button>
+
                             </div>
 
                         `;
@@ -4370,14 +4381,12 @@ window.viewHistory = async function(pointId) {
                 )
                 .join("");
 
-
     } catch (error) {
 
         console.error(
             "History loading error:",
             error
         );
-
 
         historyContent.innerHTML = `
             <div
@@ -4395,7 +4404,21 @@ window.viewHistory = async function(pointId) {
 
     }
 
-}
+};
+
+
+window.closeHistoryModal =
+    function() {
+
+        document.getElementById(
+            "historyModal"
+        ).classList.remove(
+            "active"
+        );
+
+    };
+
+
 
     /* =========================================
        CLOSE MODAL
@@ -4422,6 +4445,9 @@ window.viewHistory = async function(pointId) {
 
         form.reset();
 
+        document.getElementById(
+            "observationDate"
+        ).value = "";
 
         resetPhotoUI();
 
@@ -4523,53 +4549,7 @@ window.viewHistory = async function(pointId) {
     );
 
 </script>
-<!-- =========================================
-     MONUMENT HISTORY MODAL
-========================================= -->
-
-<div
-        id="historyModal"
-        class="modal-overlay"
-        style="display: none;"
->
-
-    <div class="modal">
-
-        <div class="modal-header">
-
-            <div>
-                <h2 id="historyTitle">
-                    Monument History
-                </h2>
-
-                <p id="historySubtitle">
-                    Control point history
-                </p>
-            </div>
-
-            <button
-                    type="button"
-                    class="modal-close"
-                    onclick="closeHistoryModal()"
-            >
-                ×
-            </button>
-
-        </div>
-
-        <div
-                id="historyContent"
-                class="history-content"
-        >
-            Loading history...
-        </div>
-
-    </div>
-
-</div>
 
 </body>
 
-
 </html>
-```
