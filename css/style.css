@@ -2134,3 +2134,548 @@ h1 {
     }
 
 }
+
+/* =========================================
+   MONUMENT PHOTO GALLERY
+   ========================================= */
+
+.monument-gallery-slot {
+
+    position: relative;
+
+    background: #eef3f8;
+
+    border: 1px solid #d5dee9;
+
+    border-radius: 12px;
+
+    min-height: 150px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+.monument-gallery-slot img {
+
+    width: 100%;
+
+    height: 150px;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+.gallery-empty {
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    text-align: center;
+
+    padding: 20px;
+
+}
+
+.gallery-delete {
+
+    position: absolute;
+
+    top: 7px;
+
+    right: 7px;
+
+    width: 28px;
+
+    height: 28px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #dc2626;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+.gallery-delete:hover {
+
+    background: #b91c1c;
+
+}
+
+.gallery-number {
+
+    position: absolute;
+
+    bottom: 7px;
+
+    left: 7px;
+
+    background: rgba(0,0,0,.65);
+
+    color: white;
+
+    padding: 4px 7px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+}
+
+/* =========================================
+   USER MONUMENT PHOTO GALLERY
+   ========================================= */
+
+.monument-user-gallery {
+
+    width: 100%;
+
+    margin: 15px 0;
+
+}
+
+.monument-user-photo-wrapper {
+
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: 12px;
+
+}
+
+.monument-user-photo-wrapper
+.control-point-photo {
+
+    width: 100%;
+
+    height: 230px;
+
+    object-fit: cover;
+
+    display: block;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
+
+}
+
+.gallery-arrow {
+
+    position: absolute;
+
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    width: 38px;
+
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(0,0,0,.55);
+
+    color: white;
+
+    font-size: 28px;
+
+    line-height: 35px;
+
+    cursor: pointer;
+
+    z-index: 5;
+
+}
+
+.gallery-arrow:hover {
+
+    background: rgba(0,0,0,.75);
+
+}
+
+.gallery-prev {
+
+    left: 10px;
+
+}
+
+.gallery-next {
+
+    right: 10px;
+
+}
+
+.gallery-dots {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 9px;
+
+}
+
+.gallery-dot {
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: #cbd5e1;
+
+    cursor: pointer;
+
+}
+
+.gallery-dot.active {
+
+    background: #1769d1;
+
+    transform: scale(1.2);
+
+}
+
+/* =========================================
+   CLICKABLE HISTORY CARDS
+   ========================================= */
+
+.history-clickable {
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+
+    position: relative;
+
+}
+
+
+.history-clickable:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 8px 22px rgba(23, 105, 209, 0.16);
+
+    border-color: #1769d1;
+
+}
+
+
+.history-clickable:active {
+
+    transform: translateY(-1px);
+
+}
+
+
+.history-view-text {
+
+    margin-top: 7px;
+
+    font-size: 11px;
+
+    color: #1769d1;
+
+    font-weight: 600;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.2s ease;
+
+}
+
+
+.history-clickable:hover
+.history-view-text {
+
+    opacity: 1;
+
+}
+
+
+/* =========================================
+   HISTORY DETAIL TABLE
+   ========================================= */
+
+.history-details-section {
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,.07);
+
+    margin-bottom: 25px;
+
+    display: none;
+
+}
+
+
+.history-details-section.active {
+
+    display: block;
+
+}
+
+
+.history-details-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.history-details-title {
+
+    margin: 0;
+
+    color: #163d73;
+
+    font-size: 22px;
+
+}
+
+
+.history-details-subtitle {
+
+    margin: 5px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+}
+
+
+.history-close-button {
+
+    border: none;
+
+    background: #e8f1ff;
+
+    color: #1769d1;
+
+    padding: 10px 16px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.history-close-button:hover {
+
+    background: #d7e7ff;
+
+}
+
+
+/* =========================================
+   HISTORY TABLE
+   ========================================= */
+
+.history-table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid #dbe5f0;
+
+    border-radius: 12px;
+
+}
+
+
+.history-analysis-table {
+
+    width: 100%;
+
+    min-width: 700px;
+
+    border-collapse: collapse;
+
+}
+
+
+.history-analysis-table th {
+
+    background: #eef5ff;
+
+    color: #163d73;
+
+    padding: 14px 16px;
+
+    text-align: left;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    border-bottom:
+        1px solid #dbe5f0;
+
+}
+
+
+.history-analysis-table td {
+
+    padding: 14px 16px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    border-bottom:
+        1px solid #e2e8f0;
+
+    white-space: nowrap;
+
+}
+
+
+.history-analysis-table tr:last-child td {
+
+    border-bottom: none;
+
+}
+
+
+.history-analysis-table tbody tr:hover {
+
+    background: #f8fbff;
+
+}
+
+
+.history-date {
+
+    font-weight: 600;
+
+    color: #163d73;
+
+}
+
+
+.history-empty {
+
+    text-align: center;
+
+    padding: 35px;
+
+    color: #64748b;
+
+}
+
+
+.history-status-badge {
+
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 15px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+}
+
+
+.history-status-damage {
+
+    background: #fff3e8;
+
+    color: #c2410c;
+
+}
+
+
+.history-status-replaced {
+
+    background: #e8e8ff;
+
+    color: #4338ca;
+
+}
+
+
+.history-status-critical {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .history-details-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+    }
+
+    .history-close-button {
+
+        width: 100%;
+
+    }
+
+}

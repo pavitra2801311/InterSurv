@@ -1,4 +1,4 @@
-<html>
+```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -489,7 +489,7 @@
         }
 
         /* =========================================
-           PHOTO SECTION
+           PHOTO GALLERY
            ========================================= */
 
         .photo-section {
@@ -497,67 +497,80 @@
             background: #f8fbff;
             border-radius: 12px;
             padding: 16px;
-            margin-top: 3px;
         }
 
-        .photo-preview-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
+        .monument-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
 
-        .current-photo {
-            width: 190px;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 10px;
+        .monument-gallery-slot {
+            position: relative;
+            min-height: 145px;
             border: 1px solid #d1d9e3;
-            display: none;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #e9eef5;
         }
 
-        .photo-placeholder {
-            width: 190px;
-            height: 130px;
-            border-radius: 10px;
-            background: #e9eef5;
-            color: #64748b;
+        .monument-gallery-slot img {
+            width: 100%;
+            height: 145px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-empty {
+            height: 145px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 12px;
+            color: #64748b;
+            font-size: 11px;
+            padding: 10px;
         }
 
-        .photo-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .gallery-number {
+            position: absolute;
+            left: 7px;
+            bottom: 7px;
+            background: rgba(22,61,115,.88);
+            color: white;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
         }
 
-        .choose-photo,
-        .upload-photo,
-        .delete-photo {
+        .gallery-delete {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: #e55353;
+            color: white;
+            font-size: 18px;
+            line-height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .gallery-delete:hover {
+            background: #c93f3f;
+        }
+
+        .choose-photo {
             border: none;
             padding: 10px 15px;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-        }
-
-        .choose-photo {
             background: #1769d1;
-            color: white;
-        }
-
-        .upload-photo {
-            background: #198754;
-            color: white;
-        }
-
-        .delete-photo {
-            background: #e55353;
             color: white;
         }
 
@@ -565,12 +578,9 @@
             background: #1256ad;
         }
 
-        .upload-photo:hover {
-            background: #157347;
-        }
-
-        .delete-photo:hover {
-            background: #c93f3f;
+        .choose-photo:disabled {
+            opacity: .55;
+            cursor: not-allowed;
         }
 
         .photo-status {
@@ -579,11 +589,200 @@
             color: #64748b;
         }
 
-        .photo-file-name {
-            margin-top: 8px;
+
+        /* =========================================
+           HISTORY EVIDENCE PHOTOS
+           ========================================= */
+
+        .evidence-section {
+            display: none;
+            border: 1px solid #dbe3ed;
+            background: #fffaf5;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .evidence-section.active {
+            display: block;
+        }
+
+        .evidence-note {
+            margin: 0 0 12px;
+            color: #64748b;
             font-size: 12px;
-            color: #475569;
-            word-break: break-all;
+            line-height: 1.5;
+        }
+
+        .evidence-required {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .evidence-gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .evidence-slot {
+            position: relative;
+            min-height: 125px;
+            border: 1px solid #d1d9e3;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #eef2f7;
+        }
+
+        .evidence-slot img {
+            width: 100%;
+            height: 125px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .evidence-empty {
+            height: 125px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #64748b;
+            font-size: 11px;
+            padding: 10px;
+        }
+
+        .evidence-number {
+            position: absolute;
+            left: 7px;
+            bottom: 7px;
+            background: rgba(22,61,115,.88);
+            color: white;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .evidence-delete {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 50%;
+            background: #e55353;
+            color: white;
+            font-size: 18px;
+            line-height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .evidence-delete:hover {
+            background: #c93f3f;
+        }
+
+        .evidence-add {
+            margin-top: 12px;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #0f766e;
+            color: white;
+        }
+
+        .evidence-add:hover {
+            background: #0b5f59;
+        }
+
+        .evidence-add:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .evidence-status {
+            margin-top: 9px;
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* =========================================
+           HISTORY EVIDENCE DISPLAY
+           ========================================= */
+
+        .history-evidence {
+            margin-top: 12px;
+        }
+
+        .history-evidence-title {
+            color: #163d73;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .history-evidence-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .history-evidence-photo {
+            width: 86px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 7px;
+            border: 1px solid #d1d9e3;
+            cursor: zoom-in;
+        }
+
+        .history-photo-viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.94);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            padding: 55px 70px;
+        }
+
+        .history-photo-viewer.active {
+            display: flex;
+        }
+
+        .history-photo-viewer img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .history-photo-viewer-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(255,255,255,.15);
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .evidence-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .history-photo-viewer {
+                padding: 55px 15px;
+            }
         }
 
         /* =========================================
@@ -825,6 +1024,10 @@
 
             .form-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .monument-gallery {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .field.full {
@@ -1138,6 +1341,15 @@
                         HSR
                     </option>
 
+                    <option value="BKL">
+                        BKL
+                    </option>
+
+                    <option value="BK">
+                        BK
+                    </option>
+
+
                 </select>
 
             </div>
@@ -1287,90 +1499,58 @@
 
 
             <!-- =====================================
-                 PHOTO
+                 MONUMENT PHOTO GALLERY
                  ===================================== -->
 
             <div class="field full">
 
                 <label>
-                    Control Point Photo
+                    Monument Photos
                 </label>
-
 
                 <div class="photo-section">
 
+                    <p style="
+            margin:0 0 12px;
+            color:#64748b;
+            font-size:12px;
+        ">
+                        Upload up to 4 photos of this monument.
+                        These photos will be visible to users.
+                    </p>
 
-                    <div class="photo-preview-wrapper">
-
-                        <div
-                                class="photo-placeholder"
-                                id="photoPlaceholder"
-                        >
-                            No Photo
-                        </div>
-
-
-                        <img
-                                id="currentPhoto"
-                                class="current-photo"
-                                alt="Control point photo"
-                        >
-
+                    <div
+                            id="monumentPhotoGallery"
+                            style="
+                display:grid;
+                grid-template-columns:
+                    repeat(auto-fit, minmax(150px, 1fr));
+                gap:12px;
+            "
+                    >
                     </div>
-
 
                     <input
                             type="file"
-                            id="photoInput"
+                            id="galleryPhotoInput"
                             accept="image/*"
                             hidden
                     >
 
-
-                    <div class="photo-actions">
-
-                        <button
-                                type="button"
-                                class="choose-photo"
-                                id="choosePhotoButton"
-                        >
-                            CHOOSE PHOTO
-                        </button>
-
-
-                        <button
-                                type="button"
-                                class="upload-photo"
-                                id="uploadPhotoButton"
-                                disabled
-                        >
-                            UPLOAD PHOTO
-                        </button>
-
-
-                        <button
-                                type="button"
-                                class="delete-photo"
-                                id="deletePhotoButton"
-                                disabled
-                        >
-                            DELETE PHOTO
-                        </button>
-
-                    </div>
-
-
-                    <div
-                            class="photo-file-name"
-                            id="photoFileName"
-                    ></div>
-
-
-                    <div
-                            class="photo-status"
-                            id="photoStatus"
+                    <button
+                            type="button"
+                            class="choose-photo"
+                            id="chooseGalleryPhotoButton"
+                            style="margin-top:15px;"
                     >
-                        Select a photo to upload.
+                        + ADD PHOTO
+                    </button>
+
+                    <div
+                            id="galleryPhotoStatus"
+                            class="photo-status"
+                    >
+                        You can add up to 4 photos.
                     </div>
 
                 </div>
@@ -1379,8 +1559,59 @@
 
 
             <!-- =====================================
-                 HIDDEN PHOTO DATA
+                 HISTORY EVIDENCE PHOTOS
                  ===================================== -->
+
+            <div
+                    class="field full"
+                    id="evidencePhotoSection"
+            >
+
+                <label>
+                    Status Change Evidence Photos
+                </label>
+
+                <div class="evidence-section" id="evidenceSection">
+
+                    <p class="evidence-note" id="evidenceNote">
+                        Evidence photos are attached only to the new monument history record.
+                        They will not replace the permanent Monument Photos above.
+                    </p>
+
+                    <div
+                            id="evidencePhotoGallery"
+                            class="evidence-gallery"
+                    >
+                    </div>
+
+                    <input
+                            type="file"
+                            id="evidencePhotoInput"
+                            accept="image/*"
+                            multiple
+                            hidden
+                    >
+
+                    <button
+                            type="button"
+                            class="evidence-add"
+                            id="chooseEvidencePhotoButton"
+                    >
+                        + ADD EVIDENCE PHOTO
+                    </button>
+
+                    <div
+                            id="evidencePhotoStatus"
+                            class="evidence-status"
+                    >
+                        No evidence photos added.
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Hidden compatibility fields -->
 
             <input
                     type="hidden"
@@ -1392,6 +1623,10 @@
                     id="imageFileId"
             >
 
+            <input
+                    type="hidden"
+                    id="imageUrls"
+            >
 
             <p
                     id="formValidationError"
@@ -1498,28 +1733,19 @@
         crossorigin=""
 ></script>
 
-<!-- =========================================
-     FIREBASE + IMAGEKIT
-     ========================================= -->
-
 <script type="module">
 
-    /* =========================================
-       FIREBASE
-       ========================================= */
+    /* =========================================================
+       INTERSURV ADMIN DASHBOARD
+       FIREBASE + FIRESTORE + IMAGEKIT + LEAFLET
+       ========================================================= */
 
-    import {
-        db,
-        auth
-    } from "./js/firebase-config.js";
-
+    import { db, auth } from "./js/firebase-config.js";
 
     import {
         onAuthStateChanged,
         signOut
-    } from
-        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
-
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
     import {
         collection,
@@ -1530,157 +1756,502 @@
         doc,
         deleteField,
         serverTimestamp
-    } from
-        "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
 
 
-    /* =========================================
-       EXISTING SUPABASE EDGE FUNCTIONS
-       ========================================= */
+    /* =========================================================
+       CONFIGURATION
+       ========================================================= */
 
     const IMAGEKIT_UPLOAD_ENDPOINT =
         "https://bstyxuffbdafgujenpmr.supabase.co/functions/v1/imagekit-auth";
 
-
     const IMAGEKIT_DELETE_ENDPOINT =
         "https://bstyxuffbdafgujenpmr.supabase.co/functions/v1/delete-imagekit-photo";
 
-
-    /* =========================================
-       COLLECTION
-       ========================================= */
-
     const controlPointsRef =
-        collection(
-            db,
-            "control_points"
-        );
+        collection(db, "control_points");
 
+
+    /* =========================================================
+       STATE
+       ========================================================= */
 
     let controlPoints = [];
-
     let editingId = null;
 
-    let selectedPhotoFile = null;
+    let monumentPhotos = [];
+    let originalGalleryPhotos = [];
+    let newGalleryUploads = [];
+    let removedGalleryPhotos = [];
+    let galleryUploading = false;
 
-    let photoWasDeleted = false;
-
-
-    /* =========================================
-       ADMIN MAP STATE
-       ========================================= */
+    // Pending evidence photos for the next history event.
+    let evidenceFiles = [];
+    let uploadedEvidencePhotos = [];
+    let evidenceUploading = false;
 
     let adminMap = null;
     let mapMarkers = new Map();
     let mapFirstLoad = true;
 
 
-
-    /* =========================================
+    /* =========================================================
        ELEMENTS
-       ========================================= */
+       ========================================================= */
 
-    const table =
-        document.getElementById(
-            "pointsTable"
+    const table = document.getElementById("pointsTable");
+    const modal = document.getElementById("pointModal");
+    const form = document.getElementById("pointForm");
+    const searchBox = document.getElementById("searchBox");
+    const status = document.getElementById("status");
+    const saveButton = document.getElementById("saveButton");
+    const galleryPhotoInput = document.getElementById("galleryPhotoInput");
+    const chooseGalleryPhotoButton = document.getElementById("chooseGalleryPhotoButton");
+    const monumentPhotoGallery = document.getElementById("monumentPhotoGallery");
+    const galleryPhotoStatus = document.getElementById("galleryPhotoStatus");
+
+    const evidenceSection = document.getElementById("evidenceSection");
+    const evidenceNote = document.getElementById("evidenceNote");
+    const evidencePhotoGallery = document.getElementById("evidencePhotoGallery");
+    const evidencePhotoInput = document.getElementById("evidencePhotoInput");
+    const chooseEvidencePhotoButton =
+        document.getElementById("chooseEvidencePhotoButton");
+    const evidencePhotoStatus =
+        document.getElementById("evidencePhotoStatus");
+
+
+    /* =========================================================
+       SAFE HTML HELPERS
+       ========================================================= */
+
+    function escapeHTML(value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function escapeAttribute(value) {
+        return escapeHTML(value);
+    }
+
+
+    /* =========================================================
+       STATUS MESSAGE
+       ========================================================= */
+
+    function showStatus(message, type) {
+        status.textContent = message || "";
+        status.className = type || "";
+
+        window.clearTimeout(showStatus.timer);
+        showStatus.timer = window.setTimeout(function () {
+            status.textContent = "";
+            status.className = "";
+        }, 4000);
+    }
+
+
+    /* =========================================================
+       STATUS BADGE
+       ========================================================= */
+
+    function getStatusBadge(value) {
+        const statusValue = value || "Not Inspected";
+        let className = "status-not-inspected";
+
+        if (statusValue === "Good") {
+            className = "status-good";
+        } else if (statusValue === "Minor Damage") {
+            className = "status-minor";
+        } else if (statusValue === "Damaged") {
+            className = "status-damaged";
+        } else if (statusValue === "Critical / Replacement Required") {
+            className = "status-critical";
+        } else if (statusValue === "Replaced") {
+            className = "status-replaced";
+        }
+
+        return `
+            <span class="status-badge ${className}">
+                ${escapeHTML(statusValue)}
+            </span>
+        `;
+    }
+
+
+    /* =========================================================
+       NORMALIZE FIRESTORE POINT
+       ========================================================= */
+
+    function normalizePoint(documentSnapshot) {
+        const data = documentSnapshot.data();
+
+        let imageUrls = [];
+
+        if (Array.isArray(data.imageUrls)) {
+            imageUrls = data.imageUrls
+                .filter(function (item) {
+                    return item && (typeof item === "string" || item.url);
+                })
+                .map(function (item) {
+                    if (typeof item === "string") {
+                        return {
+                            url: item,
+                            fileId: ""
+                        };
+                    }
+
+                    return {
+                        url: item.url || "",
+                        fileId: item.fileId || ""
+                    };
+                })
+                .filter(function (item) {
+                    return item.url;
+                })
+                .slice(0, 4);
+        }
+
+        if (imageUrls.length === 0 && data.imageUrl) {
+            imageUrls.push({
+                url: data.imageUrl,
+                fileId: data.imageFileId || ""
+            });
+        }
+
+        return {
+            id: documentSnapshot.id,
+            pointCode: data.pointCode || documentSnapshot.id,
+            pointType: data.pointType || "",
+            monumentStatus: data.monumentStatus || "Not Inspected",
+            latitude: Number(data.latitude),
+            longitude: Number(data.longitude),
+            northing: Number(data.northing),
+            easting: Number(data.easting),
+            elevation: Number(data.elevation),
+            description: data.description || "",
+            imageUrls: imageUrls,
+            imageUrl: data.imageUrl || "",
+            imageFileId: data.imageFileId || ""
+        };
+    }
+
+
+    /* =========================================================
+       LOAD CONTROL POINTS
+       ========================================================= */
+
+    async function loadControlPoints() {
+        try {
+            const snapshot = await getDocs(controlPointsRef);
+
+            controlPoints = snapshot.docs.map(normalizePoint);
+
+            controlPoints.sort(function (a, b) {
+                return a.pointCode.localeCompare(b.pointCode, undefined, {
+                    numeric: true,
+                    sensitivity: "base"
+                });
+            });
+
+            updateSummary();
+            renderTable();
+            renderAdminMap();
+
+            console.log(
+                "Control points loaded:",
+                controlPoints.length
+            );
+
+        } catch (error) {
+            console.error("Control point loading error:", error);
+            showStatus(
+                "Unable to load control points: " + error.message,
+                "error"
+            );
+        }
+    }
+
+
+   /* =========================================================
+   NORMALIZE POINT TYPE
+   ========================================================= */
+
+function normalizePointType(type) {
+
+    const value =
+        String(type || "")
+            .trim()
+            .toUpperCase();
+
+    /*
+     * Keep compatibility with older records
+     * that may have been saved as CP.
+     *
+     * CP will be counted as GCP.
+     */
+    if (value === "CP") {
+        return "GCP";
+    }
+
+    return value;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+function updateSummary() {
+
+    const totalPoints =
+        document.getElementById("totalPoints");
+
+    const photoPoints =
+        document.getElementById("photoPoints");
+
+    const pointTypes =
+        document.getElementById("pointTypes");
+
+
+    const types =
+        new Set(
+            controlPoints
+                .map(function (point) {
+
+                    return normalizePointType(
+                        point.pointType
+                    );
+
+                })
+                .filter(function (type) {
+
+                    return [
+                        "TBM",
+                        "GCP",
+                        "GPS",
+                        "CRM",
+                        "HSR",
+                        "BKL",
+                        "BK"
+                    ].includes(type);
+
+                })
         );
 
 
-    const modal =
-        document.getElementById(
-            "pointModal"
-        );
+    const pointsWithPhotos =
+        controlPoints.filter(
+            function (point) {
+
+                return (
+                    Array.isArray(
+                        point.imageUrls
+                    ) &&
+                    point.imageUrls.length > 0
+                );
+
+            }
+        ).length;
 
 
-    const form =
-        document.getElementById(
-            "pointForm"
-        );
+    totalPoints.textContent =
+        controlPoints.length;
 
 
-    const searchBox =
-        document.getElementById(
-            "searchBox"
-        );
+    photoPoints.textContent =
+        pointsWithPhotos;
 
 
-    const status =
-        document.getElementById(
-            "status"
-        );
+    pointTypes.textContent =
+        types.size;
+
+}
+
+    /* =========================================================
+       TABLE PHOTO
+       ========================================================= */
+
+    function getFirstPhoto(point) {
+        if (
+            Array.isArray(point.imageUrls) &&
+            point.imageUrls.length > 0 &&
+            point.imageUrls[0].url
+        ) {
+            return point.imageUrls[0].url;
+        }
+
+        return point.imageUrl || "";
+    }
 
 
-    const photoInput =
-        document.getElementById(
-            "photoInput"
-        );
+    /* =========================================================
+       RENDER TABLE
+       ========================================================= */
+
+    function renderTable() {
+        if (!table) return;
+
+        const query =
+            String(searchBox?.value || "")
+                .trim()
+                .toLowerCase();
+
+        const filtered = controlPoints.filter(function (point) {
+            if (!query) return true;
+
+            return (
+                String(point.pointCode || "")
+                    .toLowerCase()
+                    .includes(query) ||
+                String(point.pointType || "")
+                    .toLowerCase()
+                    .includes(query) ||
+                String(point.monumentStatus || "")
+                    .toLowerCase()
+                    .includes(query)
+            );
+        });
+
+        if (filtered.length === 0) {
+            table.innerHTML = `
+                <tr>
+                    <td colspan="10"
+                        style="text-align:center;padding:30px;color:#64748b;">
+                        No control points found.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        table.innerHTML = filtered.map(function (point) {
+            const photo = getFirstPhoto(point);
+
+            const photoHTML = photo
+                ? `
+                    <img
+                        class="point-photo"
+                        src="${escapeAttribute(photo)}"
+                        alt="${escapeAttribute(point.pointCode)}"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="no-photo" style="display:none;">
+                        No photo
+                    </div>
+                  `
+                : `
+                    <div class="no-photo">
+                        No photo
+                    </div>
+                  `;
+
+            return `
+                <tr class="table-clickable" data-point-id="${escapeAttribute(point.id)}">
+
+                    <td>${photoHTML}</td>
+
+                    <td><strong>${escapeHTML(point.pointCode)}</strong></td>
+
+                    <td>${escapeHTML(point.pointType || "-")}</td>
+
+                    <td>${getStatusBadge(point.monumentStatus)}</td>
+
+                    <td>${formatNumber(point.northing)}</td>
+
+                    <td>${formatNumber(point.easting)}</td>
+
+                    <td>${formatNumber(point.elevation)}</td>
+
+                    <td>${formatNumber(point.latitude)}</td>
+
+                    <td>${formatNumber(point.longitude)}</td>
+
+                    <td>
+                        <div class="actions">
+                            <button
+                                type="button"
+                                class="edit"
+                                data-action="edit"
+                                data-id="${escapeAttribute(point.id)}"
+                            >
+                                EDIT
+                            </button>
+
+                            <button
+                                type="button"
+                                class="history"
+                                data-action="history"
+                                data-id="${escapeAttribute(point.id)}"
+                            >
+                                HISTORY
+                            </button>
+
+                            <button
+                                type="button"
+                                class="delete"
+                                data-action="delete"
+                                data-id="${escapeAttribute(point.id)}"
+                            >
+                                DELETE
+                            </button>
+                        </div>
+                    </td>
+
+                </tr>
+            `;
+        }).join("");
+    }
 
 
-    const choosePhotoButton =
-        document.getElementById(
-            "choosePhotoButton"
-        );
+    function formatNumber(value) {
+        if (!Number.isFinite(Number(value))) {
+            return "-";
+        }
+
+        return String(value);
+    }
 
 
-    const uploadPhotoButton =
-        document.getElementById(
-            "uploadPhotoButton"
-        );
+    /* =========================================================
+       TABLE EVENTS
+       ========================================================= */
 
+    table.addEventListener("click", function (event) {
+        const button = event.target.closest("button[data-action]");
+        const row = event.target.closest("tr[data-point-id]");
 
-    const deletePhotoButton =
-        document.getElementById(
-            "deletePhotoButton"
-        );
+        if (button) {
+            const id = button.dataset.id;
+            const action = button.dataset.action;
 
+            if (action === "edit") {
+                openEditModal(id);
+            } else if (action === "history") {
+                window.viewHistory(id);
+            } else if (action === "delete") {
+                deletePoint(id);
+            }
 
-    const currentPhoto =
-        document.getElementById(
-            "currentPhoto"
-        );
+            return;
+        }
 
-
-    const photoPlaceholder =
-        document.getElementById(
-            "photoPlaceholder"
-        );
-
-
-    const photoFileName =
-        document.getElementById(
-            "photoFileName"
-        );
-
-
-    const photoStatus =
-        document.getElementById(
-            "photoStatus"
-        );
-
-
-    const saveButton =
-        document.getElementById(
-            "saveButton"
-        );
-
-
-document.getElementById("analyticsButton")
-    .addEventListener("click", function () {
-
-        window.location.href = "admin-analytics.html";
-
+        if (row) {
+            focusPointOnMap(row.dataset.pointId);
+        }
     });
 
 
-    /* =========================================
-       OPENSTREETMAP / LEAFLET MAP
-       ========================================= */
+    /* =========================================================
+       LEAFLET ADMIN MAP
+       ========================================================= */
 
     function initializeAdminMap() {
-
-        if (adminMap) {
-            return;
-        }
+        if (adminMap) return;
 
         adminMap = L.map("adminMap", {
             zoomControl: true
@@ -1702,7 +2273,6 @@ document.getElementById("analyticsButton")
 
 
     function clearMapMarkers() {
-
         mapMarkers.forEach(function (marker) {
             adminMap.removeLayer(marker);
         });
@@ -1712,109 +2282,73 @@ document.getElementById("analyticsButton")
 
 
     function createMapPopup(point) {
+        const photo = getFirstPhoto(point);
 
-        const code =
-            escapeHTML(point.pointCode || "-");
-
-        const type =
-            escapeHTML(point.pointType || "-");
-
-        const latitude =
-            point.latitude ?? "-";
-
-        const longitude =
-            point.longitude ?? "-";
-
-        const northing =
-            point.northing ?? "-";
-
-        const easting =
-            point.easting ?? "-";
-
-        const elevation =
-            point.elevation ?? "-";
-
-        const description =
-            point.description
-                ? escapeHTML(point.description)
-                : "";
-
-        const photoHTML =
-            point.imageUrl
-                ? `
-                    <img
-                        class="map-popup-photo"
-                        src="${escapeAttribute(point.imageUrl)}"
-                        alt="${code}"
-                        onerror="this.outerHTML='<div class=&quot;map-no-photo&quot;>Photo unavailable</div>'"
-                    >
-                  `
-                : `
-                    <div class="map-no-photo">
-                        No Photo
-                    </div>
-                  `;
+        const photoHTML = photo
+            ? `
+                <img
+                    class="map-popup-photo"
+                    src="${escapeAttribute(photo)}"
+                    alt="${escapeAttribute(point.pointCode)}"
+                    onerror="this.outerHTML='<div class=\"map-no-photo\">Photo unavailable</div>'"
+                >
+              `
+            : `
+                <div class="map-no-photo">
+                    No Photo
+                </div>
+              `;
 
         return `
             <div class="map-popup">
-
                 ${photoHTML}
 
                 <div class="map-popup-title">
-                    ${code}
+                    ${escapeHTML(point.pointCode)}
                 </div>
 
                 <div class="map-popup-row">
-                    <strong>Type:</strong> ${type}
+                    <strong>Type:</strong>
+                    ${escapeHTML(point.pointType || "-")}
                 </div>
 
                 <div class="map-popup-row">
-                    <strong>Northing:</strong> ${northing}
+                    <strong>Status:</strong>
+                    ${escapeHTML(point.monumentStatus || "Not Inspected")}
                 </div>
 
                 <div class="map-popup-row">
-                    <strong>Easting:</strong> ${easting}
+                    <strong>Northing:</strong>
+                    ${formatNumber(point.northing)}
                 </div>
 
                 <div class="map-popup-row">
-                    <strong>Elevation:</strong> ${elevation} m
+                    <strong>Easting:</strong>
+                    ${formatNumber(point.easting)}
                 </div>
 
                 <div class="map-popup-row">
-                    <strong>Latitude:</strong> ${latitude}
+                    <strong>Elevation:</strong>
+                    ${formatNumber(point.elevation)} m
                 </div>
 
                 <div class="map-popup-row">
-                    <strong>Longitude:</strong> ${longitude}
+                    <strong>Latitude:</strong>
+                    ${formatNumber(point.latitude)}
                 </div>
 
-                ${
-                    description
-                        ? `
-                            <div class="map-popup-row">
-                                <strong>Description:</strong>
-                                ${description}
-                            </div>
-                          `
-                        : ""
-                }
-
+                <div class="map-popup-row">
+                    <strong>Longitude:</strong>
+                    ${formatNumber(point.longitude)}
+                </div>
             </div>
         `;
     }
 
 
     function addPointToMap(point) {
-
-        if (!adminMap) {
-            return;
-        }
-
-        const latitude =
-            Number(point.latitude);
-
-        const longitude =
-            Number(point.longitude);
+        const latitude = Number(point.latitude);
+        const longitude = Number(point.longitude);
 
         if (
             !Number.isFinite(latitude) ||
@@ -1827,41 +2361,29 @@ document.getElementById("analyticsButton")
             return;
         }
 
-        const marker =
-            L.marker([
-                latitude,
-                longitude
-            ]).addTo(adminMap);
+        const marker = L.marker([
+            latitude,
+            longitude
+        ]).addTo(adminMap);
 
         marker.bindPopup(
             createMapPopup(point),
-            {
-                maxWidth: 300
-            }
+            { maxWidth: 300 }
         );
 
-        mapMarkers.set(
-            point.id,
-            marker
-        );
+        mapMarkers.set(point.id, marker);
     }
 
 
     function renderAdminMap() {
-
         initializeAdminMap();
-
         clearMapMarkers();
 
         const validPoints = [];
 
         controlPoints.forEach(function (point) {
-
-            const latitude =
-                Number(point.latitude);
-
-            const longitude =
-                Number(point.longitude);
+            const latitude = Number(point.latitude);
+            const longitude = Number(point.longitude);
 
             if (
                 Number.isFinite(latitude) &&
@@ -1871,44 +2393,21 @@ document.getElementById("analyticsButton")
                 longitude >= -180 &&
                 longitude <= 180
             ) {
-
                 addPointToMap(point);
-
-                validPoints.push({
-                    latitude: latitude,
-                    longitude: longitude
-                });
-
+                validPoints.push([latitude, longitude]);
             }
-
         });
 
-        if (validPoints.length > 0) {
+        if (validPoints.length > 0 && mapFirstLoad) {
+            adminMap.fitBounds(
+                L.latLngBounds(validPoints),
+                {
+                    padding: [35, 35],
+                    maxZoom: 18
+                }
+            );
 
-            const bounds =
-                L.latLngBounds(
-                    validPoints.map(function (item) {
-                        return [
-                            item.latitude,
-                            item.longitude
-                        ];
-                    })
-                );
-
-            if (mapFirstLoad) {
-
-                adminMap.fitBounds(
-                    bounds,
-                    {
-                        padding: [35, 35],
-                        maxZoom: 18
-                    }
-                );
-
-                mapFirstLoad = false;
-
-            }
-
+            mapFirstLoad = false;
         }
 
         setTimeout(function () {
@@ -1918,51 +2417,35 @@ document.getElementById("analyticsButton")
 
 
     function focusPointOnMap(id) {
+        initializeAdminMap();
 
-        if (!adminMap) {
-            initializeAdminMap();
-        }
+        const point = controlPoints.find(function (item) {
+            return item.id === id;
+        });
 
-        const point =
-            controlPoints.find(function (item) {
-                return item.id === id;
-            });
+        if (!point) return;
 
-        if (!point) {
-            return;
-        }
-
-        const latitude =
-            Number(point.latitude);
-
-        const longitude =
-            Number(point.longitude);
+        const latitude = Number(point.latitude);
+        const longitude = Number(point.longitude);
 
         if (
             !Number.isFinite(latitude) ||
             !Number.isFinite(longitude)
         ) {
-
             showStatus(
                 "This control point does not have valid latitude/longitude.",
                 "error"
             );
-
             return;
         }
-
-        adminMap.invalidateSize();
 
         adminMap.setView(
             [latitude, longitude],
             19,
-            {
-                animate: true
-            }
+            { animate: true }
         );
 
-        const marker =
-            mapMarkers.get(id);
+        const marker = mapMarkers.get(id);
 
         if (marker) {
             marker.openPopup();
@@ -1970,1590 +2453,428 @@ document.getElementById("analyticsButton")
     }
 
 
-    document.getElementById(
-        "refreshMapButton"
-    ).addEventListener(
-        "click",
-        function () {
-
+    document.getElementById("refreshMapButton")
+        .addEventListener("click", function () {
             mapFirstLoad = true;
-
             renderAdminMap();
+            showStatus("Admin map refreshed.", "success");
+        });
 
-            showStatus(
-                "Admin map refreshed.",
-                "success"
-            );
 
-        }
-    );
+    /* =========================================================
+       MONUMENT GALLERY
+       ========================================================= */
 
+    function renderMonumentPhotoGallery() {
+        monumentPhotoGallery.innerHTML = "";
 
-    /* =========================================
-       AUTHENTICATION GUARD
-       ========================================= */
+        for (let index = 0; index < 4; index++) {
+            const slot = document.createElement("div");
+            slot.className = "monument-gallery-slot";
 
-    onAuthStateChanged(
-        auth,
-        function (user) {
+            const photo = monumentPhotos[index];
 
-            if (!user) {
-
-                window.location.href =
-                    "admin.html";
-
-                return;
-
-            }
-
-
-            console.log(
-                "Authenticated admin:",
-                user.email
-            );
-
-
-            loadControlPoints();
-
-        }
-    );
-
-
-    /* =========================================
-       STATUS
-       ========================================= */
-
-    function showStatus(
-        message,
-        type
-    ) {
-
-        status.textContent =
-            message;
-
-        status.className =
-            type;
-
-
-        setTimeout(
-            function () {
-
-                status.className =
-                    "";
-
-                status.textContent =
-                    "";
-
-            },
-            4000
-        );
-
-    }
-
-
-    /* =========================================
-       PHOTO STATUS
-       ========================================= */
-
-    function setPhotoStatus(
-        message
-    ) {
-
-        photoStatus.textContent =
-            message;
-
-    }
-
-
-    /* =========================================
-       LOAD FIRESTORE
-       ========================================= */
-
-    async function loadControlPoints() {
-
-        try {
-
-            const snapshot =
-                await getDocs(
-                    controlPointsRef
-                );
-
-
-            controlPoints =
-                snapshot.docs.map(
-                    function (document) {
-
-                        return {
-
-                            id:
-                                document.id,
-
-                            ...document.data()
-
-                        };
-
-                    }
-                );
-
-
-            renderTable();
-
-            updateSummary();
-
-            renderAdminMap();
-
-
-        } catch (error) {
-
-            console.error(
-                error
-            );
-
-
-            showStatus(
-                "Unable to load Firestore data: " +
-                error.message,
-                "error"
-            );
-
-        }
-
-    }
-
-
-    /* =========================================
-       RENDER TABLE
-       ========================================= */
-
-    function renderTable() {
-
-        const search =
-            searchBox.value
-                .trim()
-                .toLowerCase();
-
-
-        table.innerHTML =
-            "";
-
-
-        const filtered =
-            controlPoints.filter(
-                function (point) {
-
-                    const code =
-                        String(
-                            point.pointCode || ""
-                        ).toLowerCase();
-
-
-                    const type =
-                        String(
-                            point.pointType || ""
-                        ).toLowerCase();
-
-
-                    return (
-                        code.includes(search) ||
-                        type.includes(search)
-                    );
-
-                }
-            );
-
-
-        if (
-            filtered.length === 0
-        ) {
-
-            table.innerHTML = `
-
-                <tr>
-
-                    <td
-                        colspan="10"
-                        style="
-                            text-align:center;
-                            padding:30px;
-                            color:#64748b;
-                        "
+            if (photo && photo.url) {
+                slot.innerHTML = `
+                    <img
+                        src="${escapeAttribute(photo.url)}"
+                        alt="Monument Photo ${index + 1}"
+                        onerror="this.style.display='none';"
                     >
-                        No control points found.
-                    </td>
 
-                </tr>
+                    <span class="gallery-number">
+                        PHOTO ${index + 1}
+                    </span>
 
-            `;
-
-            return;
-
-        }
-
-
-        filtered.forEach(
-            function (point) {
-
-                const row =
-                    document.createElement(
-                        "tr"
-                    );
-
-                row.classList.add(
-                    "table-clickable"
-                );
-
-                row.dataset.id =
-                    point.id;
-
-                row.title =
-                    "Click to locate this control point on the map";
-
-
-                let photoHTML = `
-
-                    <div class="no-photo">
-                        No Photo
+                    <button
+                        type="button"
+                        class="gallery-delete"
+                        data-gallery-index="${index}"
+                        title="Remove photo"
+                    >
+                        ×
+                    </button>
+                `;
+            } else {
+                slot.innerHTML = `
+                    <div class="gallery-empty">
+                        PHOTO ${index + 1}<br>
+                        Empty slot
                     </div>
-
                 `;
-
-
-                if (
-                    point.imageUrl
-                ) {
-
-                    photoHTML = `
-
-                        <img
-                            src="${escapeAttribute(point.imageUrl)}"
-                            class="point-photo"
-                            alt="${escapeAttribute(point.pointCode || "")}"
-                            onerror="this.outerHTML='<div class=&quot;no-photo&quot;>No Photo</div>'"
-                        >
-
-                    `;
-
-                }
-
-
-                row.innerHTML = `
-
-                    <td>
-                        ${photoHTML}
-                    </td>
-
-                    <td>
-    <strong>
-        ${escapeHTML(point.pointCode || "-")}
-    </strong>
-</td>
-
-<td>
-    ${escapeHTML(point.pointType || "-")}
-</td>
-
-<td>
-    ${getStatusBadge(point.monumentStatus)}
-</td>
-<td>
-    ${point.northing ?? "-"}
-</td>
-
-                    <td>
-                        ${point.easting ?? "-"}
-                    </td>
-
-                    <td>
-                        ${point.elevation ?? "-"} m
-                    </td>
-
-                    <td>
-                        ${point.latitude ?? "-"}
-                    </td>
-
-                    <td>
-                        ${point.longitude ?? "-"}
-                    </td>
-
-                    <td>
-
-    <div class="actions">
-
-        <button
-            class="edit"
-            data-id="${point.id}"
-        >
-            EDIT
-        </button>
-
-        <button
-            class="history"
-            data-id="${point.id}"
-        >
-            HISTORY
-        </button>
-
-        <button
-            class="delete"
-            data-id="${point.id}"
-        >
-            DELETE
-        </button>
-
-    </div>
-
-</td>
-
-                `;
-
-
-                table.appendChild(
-                    row
-                );
-
-            }
-        );
-
-
-        document
-            .querySelectorAll(".table-clickable")
-            .forEach(
-                function (row) {
-
-                    row.addEventListener(
-                        "click",
-                        function (event) {
-
-                            if (
-                                event.target.closest("button")
-                            ) {
-                                return;
-                            }
-
-                            focusPointOnMap(
-                                row.dataset.id
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
-
-        document
-            .querySelectorAll(".edit")
-            .forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function () {
-
-                            openEdit(
-                                button.dataset.id
-                            );
-
-                        }
-                    );
-
-                }
-            );
-document
-    .querySelectorAll(".history")
-    .forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    viewHistory(
-                        button.dataset.id
-                    );
-
-                }
-            );
-
-        }
-    );
-
-        document
-            .querySelectorAll(".delete")
-            .forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function () {
-
-                            deletePoint(
-                                button.dataset.id
-                            );
-
-                        }
-                    );
-
-                }
-            );
-
-    }
-
-
-    /* =========================================
-       SAFE HTML
-       ========================================= */
-
-    function escapeHTML(
-        value
-    ) {
-
-        return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-
-    }
-
-
-    function escapeAttribute(
-        value
-    ) {
-
-        return escapeHTML(
-            value
-        );
-
-    }
-    function getStatusBadge(status) {
-
-    const currentStatus =
-        status || "Not Inspected";
-
-    let className =
-        "status-not-inspected";
-
-    if (currentStatus === "Good") {
-        className = "status-good";
-    }
-    else if (currentStatus === "Minor Damage") {
-        className = "status-minor";
-    }
-    else if (currentStatus === "Damaged") {
-        className = "status-damaged";
-    }
-    else if (
-        currentStatus ===
-        "Critical / Replacement Required"
-    ) {
-        className = "status-critical";
-    }
-    else if (currentStatus === "Replaced") {
-        className = "status-replaced";
-    }
-
-    return `
-        <span class="status-badge ${className}">
-            ${escapeHTML(currentStatus)}
-        </span>
-    `;
-}
-
-
-    /* =========================================
-       SUMMARY
-       ========================================= */
-
-    function updateSummary() {
-
-        document.getElementById(
-            "totalPoints"
-        ).textContent =
-            controlPoints.length;
-
-
-        document.getElementById(
-            "photoPoints"
-        ).textContent =
-            controlPoints.filter(
-                function (point) {
-
-                    return Boolean(
-                        point.imageUrl
-                    );
-
-                }
-            ).length;
-
-
-        const types =
-            new Set(
-                controlPoints
-                    .map(
-                        function (point) {
-
-                            return point.pointType;
-
-                        }
-                    )
-                    .filter(Boolean)
-            );
-
-
-        document.getElementById(
-            "pointTypes"
-        ).textContent =
-            types.size;
-
-    }
-
-
-    /* =========================================
-       OPEN ADD
-       ========================================= */
-
-    document.getElementById(
-        "addButton"
-    ).addEventListener(
-        "click",
-        function () {
-
-            editingId =
-                null;
-
-
-            selectedPhotoFile =
-                null;
-
-            photoWasDeleted =
-                false;
-
-
-            document.getElementById(
-                "modalTitle"
-            ).textContent =
-                "Add Control Point";
-
-
-            form.reset();
-
-
-            resetPhotoUI();
-
-            setFormValidationError("");
-
-
-            modal.classList.add(
-                "active"
-            );
-
-        }
-    );
-
-
-    /* =========================================
-       OPEN EDIT
-       ========================================= */
-
-    async function openEdit(
-        id
-    ) {
-
-        const point =
-            controlPoints.find(
-                function (item) {
-
-                    return item.id === id;
-
-                }
-            );
-
-
-        if (!point) {
-
-            return;
-
-        }
-
-
-        editingId =
-            id;
-
-
-        selectedPhotoFile =
-            null;
-
-        photoWasDeleted =
-            false;
-
-
-        document.getElementById(
-            "modalTitle"
-        ).textContent =
-            "Edit Control Point";
-
-
-        document.getElementById(
-            "pointCode"
-        ).value =
-            point.pointCode || "";
-
-
-        document.getElementById(
-            "pointType"
-        ).value =
-            point.pointType || "";
-
-        document.getElementById(
-             "monumentStatus"
-        ).value =
-         point.monumentStatus || "Not Inspected";
-
-        // Load the latest saved observation date.
-        document.getElementById(
-            "observationDate"
-        ).value = "";
-
-        try {
-
-            const historySnapshot =
-                await getDocs(
-                    collection(
-                        db,
-                        "control_points",
-                        id,
-                        "monument_history"
-                    )
-                );
-
-            const historyRecords =
-                historySnapshot.docs
-                    .map(
-                        function (historyDoc) {
-                            return {
-                                id: historyDoc.id,
-                                ...historyDoc.data()
-                            };
-                        }
-                    )
-                    .sort(
-                        function (a, b) {
-
-                            const dateA =
-                                a.date?.toDate
-                                    ? a.date.toDate()
-                                    : new Date(0);
-
-                            const dateB =
-                                b.date?.toDate
-                                    ? b.date.toDate()
-                                    : new Date(0);
-
-                            return dateB - dateA;
-                        }
-                    );
-
-            const latestRecord =
-                historyRecords[0];
-
-            if (
-                latestRecord &&
-                latestRecord.observationDate?.toDate
-            ) {
-
-                const observationDate =
-                    latestRecord.observationDate
-                        .toDate();
-
-                const year =
-                    observationDate.getFullYear();
-
-                const month =
-                    String(
-                        observationDate.getMonth() + 1
-                    ).padStart(2, "0");
-
-                const day =
-                    String(
-                        observationDate.getDate()
-                    ).padStart(2, "0");
-
-                document.getElementById(
-                    "observationDate"
-                ).value =
-                    `${year}-${month}-${day}`;
             }
 
-        } catch (error) {
-
-            console.warn(
-                "Could not load observation date:",
-                error
-            );
-
+            monumentPhotoGallery.appendChild(slot);
         }
 
+        monumentPhotoGallery
+            .querySelectorAll(".gallery-delete")
+            .forEach(function (button) {
+                button.addEventListener("click", function () {
+                    removeMonumentPhoto(
+                        Number(button.dataset.galleryIndex)
+                    );
+                });
+            });
 
+        galleryPhotoStatus.textContent =
+            monumentPhotos.length + " / 4 photos added.";
 
-        document.getElementById(
-            "latitude"
-        ).value =
-            point.latitude ?? "";
-
-
-        document.getElementById(
-            "longitude"
-        ).value =
-            point.longitude ?? "";
-
-
-        document.getElementById(
-            "northing"
-        ).value =
-            point.northing ?? "";
-
-
-        document.getElementById(
-            "easting"
-        ).value =
-            point.easting ?? "";
-
-
-        document.getElementById(
-            "elevation"
-        ).value =
-            point.elevation ?? "";
-
-
-        document.getElementById(
-            "description"
-        ).value =
-            point.description || "";
-
-
-        document.getElementById(
-            "imageUrl"
-        ).value =
-            point.imageUrl || "";
-
-
-        document.getElementById(
-            "imageFileId"
-        ).value =
-            point.imageFileId || "";
-
-
-        showExistingPhoto(
-            point.imageUrl
-        );
-
-
-        photoInput.value =
-            "";
-
-
-        if (
-            point.imageUrl
-        ) {
-
-            setPhotoStatus(
-                "Existing photo loaded."
-            );
-
-            deletePhotoButton.disabled =
-                !point.imageFileId;
-
-        } else {
-
-            setPhotoStatus(
-                "No photo uploaded."
-            );
-
-            deletePhotoButton.disabled =
-                true;
-
-        }
-
-
-        uploadPhotoButton.disabled =
-            true;
-
-        setFormValidationError("");
-
-
-        modal.classList.add(
-            "active"
-        );
-
+        chooseGalleryPhotoButton.disabled =
+            monumentPhotos.length >= 4 || galleryUploading;
     }
 
 
-    /* =========================================
-       PHOTO CHOOSER
-       ========================================= */
+    function resetMonumentGallery() {
+        monumentPhotos = [];
+        originalGalleryPhotos = [];
+        newGalleryUploads = [];
+        removedGalleryPhotos = [];
+        galleryUploading = false;
 
-    choosePhotoButton.addEventListener(
+        if (galleryPhotoInput) {
+            galleryPhotoInput.value = "";
+        }
+
+        renderMonumentPhotoGallery();
+    }
+
+
+    function loadMonumentGallery(point) {
+        resetMonumentGallery();
+
+        monumentPhotos = Array.isArray(point.imageUrls)
+            ? point.imageUrls.map(function (photo) {
+                return {
+                    url: photo.url,
+                    fileId: photo.fileId || ""
+                };
+            }).slice(0, 4)
+            : [];
+
+        originalGalleryPhotos = monumentPhotos.map(function (photo) {
+            return {
+                url: photo.url,
+                fileId: photo.fileId || ""
+            };
+        });
+
+        renderMonumentPhotoGallery();
+    }
+
+
+    chooseGalleryPhotoButton.addEventListener(
         "click",
         function () {
+            if (monumentPhotos.length >= 4) {
+                alert("Maximum 4 photos allowed.");
+                return;
+            }
 
-            photoInput.click();
-
+            galleryPhotoInput.click();
         }
     );
 
 
-    photoInput.addEventListener(
+    galleryPhotoInput.addEventListener(
         "change",
-        function () {
-
-            const file =
-                photoInput.files[0];
-
-
-            if (!file) {
-
-                return;
-
-            }
-
-
-            if (
-                !file.type.startsWith(
-                    "image/"
-                )
-            ) {
-
-                showStatus(
-                    "Please select an image file.",
-                    "error"
-                );
-
-                photoInput.value =
-                    "";
-
-                return;
-
-            }
-
-
-            selectedPhotoFile =
-                file;
-
-
-            photoFileName.textContent =
-                "Selected: " +
-                file.name;
-
-
-            uploadPhotoButton.disabled =
-                false;
-
-
-            setPhotoStatus(
-                "Photo selected. Click UPLOAD PHOTO."
-            );
-
-
-            const previewURL =
-                URL.createObjectURL(
-                    file
-                );
-
-
-            currentPhoto.src =
-                previewURL;
-
-
-            currentPhoto.style.display =
-                "block";
-
-
-            photoPlaceholder.style.display =
-                "none";
-
-        }
-    );
-
-
-    /* =========================================
-       UPLOAD PHOTO
-       ========================================= */
-
-    uploadPhotoButton.addEventListener(
-        "click",
         async function () {
+            const file = galleryPhotoInput.files[0];
 
-            if (
-                !selectedPhotoFile
-            ) {
+            if (!file) return;
 
+            if (!file.type.startsWith("image/")) {
+                alert("Please select an image file.");
+                galleryPhotoInput.value = "";
                 return;
-
             }
 
+            if (monumentPhotos.length >= 4) {
+                alert("Maximum 4 photos allowed.");
+                galleryPhotoInput.value = "";
+                return;
+            }
 
-            await uploadPhotoToImageKit();
-
+            await uploadGalleryPhoto(file);
         }
     );
 
 
-    async function uploadPhotoToImageKit() {
+    async function uploadGalleryPhoto(file) {
+        if (galleryUploading) return;
 
-        if (
-            !selectedPhotoFile
-        ) {
-
-            return;
-
-        }
-
-
-        uploadPhotoButton.disabled =
-            true;
-
-
-        choosePhotoButton.disabled =
-            true;
-
-
-        deletePhotoButton.disabled =
-            true;
-
-
-        setPhotoStatus(
-            "Uploading photo to ImageKit..."
-        );
-
+        galleryUploading = true;
+        renderMonumentPhotoGallery();
+        galleryPhotoStatus.textContent = "Uploading photo...";
 
         try {
-
             const pointCode =
-                document.getElementById(
-                    "pointCode"
-                ).value.trim();
-
-
-            const safePointCode =
-                pointCode ||
+                document.getElementById("pointCode")
+                    .value.trim() ||
                 "control_point";
 
-
-            const extension =
-                getFileExtension(
-                    selectedPhotoFile.name
-                );
-
+            const extension = getFileExtension(file.name);
 
             const fileName =
-                safePointCode +
-                "_" +
+                pointCode +
+                "_gallery_" +
                 Date.now() +
                 extension;
 
+            const formData = new FormData();
 
-            const formData =
-                new FormData();
+            formData.append("fileName", fileName);
+            formData.append("file", file, fileName);
 
-
-            formData.append(
-                "fileName",
-                fileName
+            const response = await fetch(
+                IMAGEKIT_UPLOAD_ENDPOINT,
+                {
+                    method: "POST",
+                    body: formData
+                }
             );
 
-
-            formData.append(
-                "file",
-                selectedPhotoFile,
-                fileName
-            );
-
-
-            const response =
-                await fetch(
-                    IMAGEKIT_UPLOAD_ENDPOINT,
-                    {
-
-                        method:
-                            "POST",
-
-                        body:
-                            formData
-
-                    }
-                );
-
-
-            const responseText =
-                await response.text();
-
+            const responseText = await response.text();
 
             let result;
 
-
             try {
-
-                result =
-                    JSON.parse(
-                        responseText
-                    );
-
+                result = JSON.parse(responseText);
             } catch {
-
                 throw new Error(
-                    "ImageKit server returned invalid JSON."
+                    "ImageKit returned invalid JSON."
                 );
-
             }
 
-
-            if (
-                !response.ok
-            ) {
-
+            if (!response.ok) {
                 throw new Error(
                     result.error ||
                     result.message ||
-                    (
-                        "Upload failed. HTTP " +
-                        response.status
-                    )
+                    "Upload failed. HTTP " + response.status
                 );
-
             }
 
-
-            const imageFileId =
-                result.fileId;
-
-
-            const imageUrl =
-                result.url;
-
-
-            if (
-                !imageFileId ||
-                !imageUrl
-            ) {
-
+            if (!result.url) {
                 throw new Error(
-                    "ImageKit did not return fileId and url."
+                    "ImageKit did not return an image URL."
                 );
-
             }
 
+            const uploadedPhoto = {
+                url: result.url,
+                fileId: result.fileId || ""
+            };
 
-            /*
-             * Store the ImageKit information
-             * temporarily in the form.
-             *
-             * Firestore is updated when SAVE
-             * is pressed.
-             */
+            monumentPhotos.push(uploadedPhoto);
+            newGalleryUploads.push(uploadedPhoto);
 
-            document.getElementById(
-                "imageUrl"
-            ).value =
-                imageUrl;
+            galleryPhotoInput.value = "";
 
-
-            document.getElementById(
-                "imageFileId"
-            ).value =
-                imageFileId;
-
-
-            currentPhoto.src =
-                imageUrl;
-
-
-            currentPhoto.style.display =
-                "block";
-
-
-            photoPlaceholder.style.display =
-                "none";
-
-
-            selectedPhotoFile =
-                null;
-
-
-            photoInput.value =
-                "";
-
-
-            uploadPhotoButton.disabled =
-                true;
-
-
-            deletePhotoButton.disabled =
-                false;
-
-
-            setPhotoStatus(
-                "Photo uploaded successfully. Click SAVE to save it to this control point."
-            );
-
+            renderMonumentPhotoGallery();
 
             showStatus(
-                "Photo uploaded to ImageKit.",
+                "Monument photo uploaded successfully. Click SAVE to keep the gallery changes.",
                 "success"
             );
 
-
         } catch (error) {
+            console.error("Gallery upload error:", error);
 
-            console.error(
-                "ImageKit upload error:",
-                error
-            );
-
+            galleryPhotoStatus.textContent =
+                "Upload failed.";
 
             showStatus(
-                "Photo upload failed: " +
-                error.message,
+                "Gallery photo upload failed: " + error.message,
                 "error"
             );
 
-
-            setPhotoStatus(
-                "Upload failed. Please try again."
-            );
-
-
-            uploadPhotoButton.disabled =
-                false;
-
         } finally {
-
-            choosePhotoButton.disabled =
-                false;
-
+            galleryUploading = false;
+            renderMonumentPhotoGallery();
         }
-
     }
 
 
-    /* =========================================
-       DELETE PHOTO
-       ========================================= */
+    function removeMonumentPhoto(index) {
+        if (
+            index < 0 ||
+            index >= monumentPhotos.length
+        ) {
+            return;
+        }
 
-    deletePhotoButton.addEventListener(
-        "click",
-        async function () {
+        const photo = monumentPhotos[index];
 
-            const fileId =
-                document.getElementById(
-                    "imageFileId"
-                ).value.trim();
+        if (!confirm("Remove this monument photo?")) {
+            return;
+        }
 
-
-            const imageUrl =
-                document.getElementById(
-                    "imageUrl"
-                ).value.trim();
-
-
-            if (
-                !fileId
-            ) {
-
-                /*
-                 * No ImageKit file exists.
-                 * Just clear the form.
-                 */
-
-                document.getElementById(
-                    "imageUrl"
-                ).value =
-                    "";
-
-                document.getElementById(
-                    "imageFileId"
-                ).value =
-                    "";
-
-                photoWasDeleted = true;
-
-
-                resetPhotoPreviewOnly();
-
-
-                setPhotoStatus(
-                    "Photo removed from this control point."
-                );
-
-
-                return;
-
-            }
-
-
-            const confirmed =
-                confirm(
-                    "Delete this photo from ImageKit and Firestore?"
-                );
-
-
-            if (!confirmed) {
-
-                return;
-
-            }
-
-
-            deletePhotoButton.disabled =
-                true;
-
-
-            uploadPhotoButton.disabled =
-                true;
-
-
-            choosePhotoButton.disabled =
-                true;
-
-
-            setPhotoStatus(
-                "Deleting photo..."
+        const isOriginal = originalGalleryPhotos.some(function (item) {
+            return (
+                item.url === photo.url &&
+                item.fileId === photo.fileId
             );
+        });
+
+        if (isOriginal && photo.fileId) {
+            removedGalleryPhotos.push(photo);
+        }
+
+        monumentPhotos.splice(index, 1);
+
+        renderMonumentPhotoGallery();
+    }
 
 
+    async function saveMonumentGalleryToFirestore(pointId) {
+        const imageUrls = monumentPhotos.map(function (photo) {
+            return {
+                url: photo.url,
+                fileId: photo.fileId || ""
+            };
+        });
+
+        const updateData = {
+            imageUrls: imageUrls
+        };
+
+        if (imageUrls.length > 0) {
+            updateData.imageUrl = imageUrls[0].url;
+            updateData.imageFileId = imageUrls[0].fileId || "";
+        } else {
+            updateData.imageUrl = deleteField();
+            updateData.imageFileId = deleteField();
+        }
+
+        await updateDoc(
+            doc(db, "control_points", pointId),
+            updateData
+        );
+    }
+
+
+    async function deleteRemovedGalleryPhotos() {
+        const uniqueFileIds = [
+            ...new Set(
+                removedGalleryPhotos
+                    .map(function (photo) {
+                        return photo.fileId;
+                    })
+                    .filter(Boolean)
+            )
+        ];
+
+        for (const fileId of uniqueFileIds) {
             try {
-
-                await deletePhotoFromImageKit(
-                    fileId
-                );
-
-
-                /*
-                 * If editing an existing CP,
-                 * remove the image fields immediately
-                 * from Firestore.
-                 *
-                 * If adding a new CP, there is no
-                 * Firestore document yet, so just
-                 * clear the form.
-                 */
-
-                if (
-                    editingId
-                ) {
-
-                    await updateDoc(
-
-                        doc(
-                            db,
-                            "control_points",
-                            editingId
-                        ),
-
-                        {
-
-                            imageUrl:
-                                deleteField(),
-
-                            imageFileId:
-                                deleteField()
-
-                        }
-
-                    );
-
-                }
-
-
-                document.getElementById(
-                    "imageUrl"
-                ).value =
-                    "";
-
-
-                document.getElementById(
-                    "imageFileId"
-                ).value =
-                    "";
-
-
-                resetPhotoPreviewOnly();
-
-
-                setPhotoStatus(
-                    "Photo deleted successfully."
-                );
-
-
-                showStatus(
-                    "Photo deleted from ImageKit and Firestore.",
-                    "success"
-                );
-
-
-                await loadControlPoints();
-
-
+                await deletePhotoFromImageKit(fileId);
             } catch (error) {
-
-                console.error(
-                    "Photo delete error:",
+                console.warn(
+                    "Could not delete removed ImageKit photo:",
+                    fileId,
                     error
                 );
-
-
-                showStatus(
-                    "Photo deletion failed: " +
-                    error.message,
-                    "error"
-                );
-
-
-                deletePhotoButton.disabled =
-                    false;
-
-            } finally {
-
-                choosePhotoButton.disabled =
-                    false;
-
             }
-
         }
-    );
+    }
 
 
-    /* =========================================
-       IMAGEKIT DELETE REQUEST
-       ========================================= */
+    async function cleanupNewGalleryUploads() {
+        const uniqueFileIds = [
+            ...new Set(
+                newGalleryUploads
+                    .map(function (photo) {
+                        return photo.fileId;
+                    })
+                    .filter(Boolean)
+            )
+        ];
 
-    async function deletePhotoFromImageKit(
-        fileId
-    ) {
-
-        const response =
-            await fetch(
-                IMAGEKIT_DELETE_ENDPOINT,
-                {
-
-                    method:
-                        "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            fileId:
-                                fileId
-
-                        })
-
-                }
-            );
+        for (const fileId of uniqueFileIds) {
+            try {
+                await deletePhotoFromImageKit(fileId);
+            } catch (error) {
+                console.warn(
+                    "Could not clean up uploaded photo:",
+                    fileId,
+                    error
+                );
+            }
+        }
+    }
 
 
-        const responseText =
-            await response.text();
+    /* =========================================================
+       IMAGEKIT DELETE
+       ========================================================= */
 
+    async function deletePhotoFromImageKit(fileId) {
+        if (!fileId) return;
 
-        let result =
-            null;
+        const response = await fetch(
+            IMAGEKIT_DELETE_ENDPOINT,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fileId: fileId
+                })
+            }
+        );
 
+        const responseText = await response.text();
+
+        let result = null;
 
         try {
-
-            result =
-                JSON.parse(
-                    responseText
-                );
-
+            result = JSON.parse(responseText);
         } catch {
-
-            /*
-             * Some successful functions
-             * may return an empty body.
-             */
-
+            // Empty response is acceptable when HTTP status is successful.
         }
 
-
-        if (
-            !response.ok
-        ) {
-
+        if (!response.ok) {
             throw new Error(
-
                 result?.error ||
                 result?.message ||
-                (
-                    "Delete failed. HTTP " +
-                    response.status
-                )
-
+                "Delete failed. HTTP " + response.status
             );
-
         }
-
     }
 
 
-    /* =========================================
-       SHOW EXISTING PHOTO
-       ========================================= */
+    function getFileExtension(filename) {
+        const lastDot = filename.lastIndexOf(".");
 
-    function showExistingPhoto(
-        imageUrl
-    ) {
-
-        photoFileName.textContent =
-            "";
-
-
-        if (
-            imageUrl
-        ) {
-
-            currentPhoto.src =
-                imageUrl;
-
-
-            currentPhoto.style.display =
-                "block";
-
-
-            photoPlaceholder.style.display =
-                "none";
-
-        } else {
-
-            resetPhotoPreviewOnly();
-
-        }
-
-    }
-
-
-    /* =========================================
-       RESET PHOTO UI
-       ========================================= */
-
-    function resetPhotoUI() {
-
-        selectedPhotoFile =
-            null;
-
-
-        photoInput.value =
-            "";
-
-
-        document.getElementById(
-            "imageUrl"
-        ).value =
-            "";
-
-
-        document.getElementById(
-            "imageFileId"
-        ).value =
-            "";
-
-
-        photoFileName.textContent =
-            "";
-
-
-        uploadPhotoButton.disabled =
-            true;
-
-
-        deletePhotoButton.disabled =
-            true;
-
-
-        setPhotoStatus(
-            "Select a photo to upload."
-        );
-
-
-        resetPhotoPreviewOnly();
-
-    }
-
-
-    function resetPhotoPreviewOnly() {
-
-        currentPhoto.removeAttribute(
-            "src"
-        );
-
-
-        currentPhoto.style.display =
-            "none";
-
-
-        photoPlaceholder.style.display =
-            "flex";
-
-    }
-
-
-    /* =========================================
-       FILE EXTENSION
-       ========================================= */
-
-    function getFileExtension(
-        filename
-    ) {
-
-        const lastDot =
-            filename.lastIndexOf(".");
-
-
-        if (
-            lastDot === -1
-        ) {
-
+        if (lastDot === -1) {
             return ".jpg";
-
         }
 
-
-        return filename.substring(
-            lastDot
-        );
-
+        return filename.substring(lastDot);
     }
 
 
-
-    /* =========================================
+    /* =========================================================
        FORM VALIDATION
-       ========================================= */
+       ========================================================= */
 
     function setFormValidationError(message) {
-
         document.getElementById(
             "formValidationError"
         ).textContent = message || "";
-
     }
 
 
     function validateControlPointForm() {
-
         setFormValidationError("");
 
         const pointCode =
             document.getElementById("pointCode")
                 .value.trim();
+
+        const pointType =
+            document.getElementById("pointType")
+                .value;
 
         const latitudeText =
             document.getElementById("latitude")
@@ -3571,15 +2892,16 @@ document
             return false;
         }
 
-        if (!latitudeText) {
+        if (!pointType) {
             setFormValidationError(
-                "Latitude is required."
+                "Please select a Point Type."
             );
-            document.getElementById("latitude").focus();
+            document.getElementById("pointType").focus();
             return false;
         }
 
         const latitude = Number(latitudeText);
+        const longitude = Number(longitudeText);
 
         if (
             !Number.isFinite(latitude) ||
@@ -3593,16 +2915,6 @@ document
             return false;
         }
 
-        if (!longitudeText) {
-            setFormValidationError(
-                "Longitude is required."
-            );
-            document.getElementById("longitude").focus();
-            return false;
-        }
-
-        const longitude = Number(longitudeText);
-
         if (
             !Number.isFinite(longitude) ||
             longitude < -180 ||
@@ -3615,21 +2927,15 @@ document
             return false;
         }
 
-        const duplicate = controlPoints.some(
-            function(point) {
-                if (
-                    editingId &&
-                    point.id === editingId
-                ) {
-                    return false;
-                }
-
-                return String(point.pointCode || "")
-                    .trim()
-                    .toLowerCase() ===
-                    pointCode.toLowerCase();
+        const duplicate = controlPoints.some(function (point) {
+            if (editingId && point.id === editingId) {
+                return false;
             }
-        );
+
+            return String(point.pointCode || "")
+                .trim()
+                .toLowerCase() === pointCode.toLowerCase();
+        });
 
         if (duplicate) {
             setFormValidationError(
@@ -3643,867 +2949,1300 @@ document
     }
 
 
-    /* =========================================
-       SAVE CONTROL POINT
-       ========================================= */
 
-    form.addEventListener(
-        "submit",
-        async function (event) {
+    /* =========================================================
+       HISTORY EVIDENCE PHOTO HELPERS
+       ========================================================= */
 
-            event.preventDefault();
+    const EVIDENCE_REQUIRED_STATUSES = [
+        "Minor Damage",
+        "Damaged",
+        "Critical / Replacement Required",
+        "Replaced"
+    ];
 
-            if (!validateControlPointForm()) {
-                return;
+    function statusNeedsEvidence(statusValue) {
+        return EVIDENCE_REQUIRED_STATUSES.includes(statusValue);
+    }
+
+    function statusUsesHistory(statusValue) {
+        return statusValue !== "Not Inspected";
+    }
+
+    function renderEvidencePhotos() {
+        if (!evidencePhotoGallery) return;
+
+        evidencePhotoGallery.innerHTML = "";
+
+        for (let index = 0; index < 4; index++) {
+            const slot = document.createElement("div");
+            slot.className = "evidence-slot";
+
+            const item = evidenceFiles[index];
+
+            if (item && item.previewUrl) {
+                slot.innerHTML = `
+                    <img
+                        src="${escapeAttribute(item.previewUrl)}"
+                        alt="Evidence Photo ${index + 1}"
+                    >
+                    <span class="evidence-number">
+                        PHOTO ${index + 1}
+                    </span>
+                    <button
+                        type="button"
+                        class="evidence-delete"
+                        data-evidence-index="${index}"
+                        title="Remove evidence photo"
+                    >
+                        ×
+                    </button>
+                `;
+            } else {
+                slot.innerHTML = `
+                    <div class="evidence-empty">
+                        PHOTO ${index + 1}<br>
+                        Empty slot
+                    </div>
+                `;
             }
 
-            saveButton.disabled =
-                true;
+            evidencePhotoGallery.appendChild(slot);
+        }
 
+        evidencePhotoGallery
+            .querySelectorAll(".evidence-delete")
+            .forEach(function (button) {
+                button.addEventListener("click", function () {
+                    removeEvidencePhoto(
+                        Number(button.dataset.evidenceIndex)
+                    );
+                });
+            });
 
-            try {
+        const count = evidenceFiles.length;
 
-                const data = {
-
-    pointCode:
-        document.getElementById(
-            "pointCode"
-        ).value.trim(),
-
-    pointType:
-        document.getElementById(
-            "pointType"
-        ).value,
-
-    monumentStatus:
-        document.getElementById(
-            "monumentStatus"
-        ).value,
-
-    latitude:
-                        Number(
-                            document.getElementById(
-                                "latitude"
-                            ).value
-                        ),
-
-                    longitude:
-                        Number(
-                            document.getElementById(
-                                "longitude"
-                            ).value
-                        ),
-
-                    northing:
-                        Number(
-                            document.getElementById(
-                                "northing"
-                            ).value
-                        ),
-
-                    easting:
-                        Number(
-                            document.getElementById(
-                                "easting"
-                            ).value
-                        ),
-
-                    elevation:
-                        Number(
-                            document.getElementById(
-                                "elevation"
-                            ).value
-                        ),
-
-                    description:
-                        document.getElementById(
-                            "description"
-                        ).value.trim()
-
-                };
-
-
-                const imageUrl =
-                    document.getElementById(
-                        "imageUrl"
-                    ).value.trim();
-
-
-                const imageFileId =
-                    document.getElementById(
-                        "imageFileId"
-                    ).value.trim();
-
-
-                /*
-                 * Only save photo fields when
-                 * an ImageKit photo exists.
-                 *
-                 * Existing photo fields are
-                 * preserved during normal edits.
-                 */
-
-                if (
-                    imageUrl &&
-                    imageFileId
-                ) {
-
-                    data.imageUrl =
-                        imageUrl;
-
-                    data.imageFileId =
-                        imageFileId;
-
-                } else if (
-                    editingId &&
-                    !photoWasDeleted
-                ) {
-
-                    const existingPoint =
-                        controlPoints.find(
-                            function(point) {
-                                return point.id === editingId;
-                            }
-                        );
-
-                    if (
-                        existingPoint &&
-                        existingPoint.imageUrl &&
-                        existingPoint.imageFileId
-                    ) {
-
-                        data.imageUrl =
-                            existingPoint.imageUrl;
-
-                        data.imageFileId =
-                            existingPoint.imageFileId;
-
-                    }
-
-                }
-
-
-               if (editingId) {
-
-    // Get the existing control point
-    const existingPoint =
-        controlPoints.find(
-            function(point) {
-                return point.id === editingId;
-            }
-        );
-
-    // Check the new status
-    const newStatus =
-        document.getElementById(
-            "monumentStatus"
-        ).value;
-
-    const oldStatus =
-        existingPoint?.monumentStatus ||
-        "Not Inspected";
-
-
-    // Update the control point
-    await updateDoc(
-
-        doc(
-            db,
-            "control_points",
-            editingId
-        ),
-
-        data
-
-    );
-
-
-    // Record history only when status changes
-    if (newStatus !== oldStatus) {
-
-        const observationDateValue =
-            document.getElementById(
-                "observationDate"
-            ).value;
-
-        if (!observationDateValue) {
-
-            setFormValidationError(
-                "Please select the Observation Date."
+        evidencePhotoStatus.textContent =
+            count +
+            " / 4 evidence photos added." +
+            (
+                statusNeedsEvidence(
+                    document.getElementById("monumentStatus").value
+                )
+                    ? " At least 1 is required for this status."
+                    : ""
             );
 
-            saveButton.disabled = false;
+        chooseEvidencePhotoButton.disabled =
+            count >= 4 || evidenceUploading;
+    }
 
+    function updateEvidenceSection() {
+        const selectedStatus =
+            document.getElementById("monumentStatus").value ||
+            "Not Inspected";
+
+        if (!statusUsesHistory(selectedStatus)) {
+            evidenceSection.classList.remove("active");
             return;
         }
 
-        await addMonumentHistory(
-            editingId,
-            newStatus,
-            "Monument status changed from " +
-            oldStatus +
-            " to " +
-            newStatus,
-            observationDateValue
+        evidenceSection.classList.add("active");
+
+        if (statusNeedsEvidence(selectedStatus)) {
+            evidenceNote.innerHTML =
+                'Evidence photos are <span class="evidence-required">required</span> for ' +
+                escapeHTML(selectedStatus) +
+                '. Add at least 1 photo. These photos will be stored only with this history event.';
+        } else {
+            evidenceNote.textContent =
+                "Evidence photos are optional for this status. These photos will be stored only with this history event.";
+        }
+
+        renderEvidencePhotos();
+    }
+
+    function resetEvidencePhotos() {
+        evidenceFiles.forEach(function (item) {
+            if (item.previewUrl) {
+                URL.revokeObjectURL(item.previewUrl);
+            }
+        });
+
+        evidenceFiles = [];
+        uploadedEvidencePhotos = [];
+        evidenceUploading = false;
+
+        if (evidencePhotoInput) {
+            evidencePhotoInput.value = "";
+        }
+
+        if (evidenceSection) {
+            evidenceSection.classList.remove("active");
+        }
+
+        if (evidencePhotoStatus) {
+            evidencePhotoStatus.textContent =
+                "No evidence photos added.";
+        }
+
+        if (chooseEvidencePhotoButton) {
+            chooseEvidencePhotoButton.disabled = false;
+        }
+
+        if (evidencePhotoGallery) {
+            evidencePhotoGallery.innerHTML = "";
+        }
+    }
+
+    function removeEvidencePhoto(index) {
+        if (
+            index < 0 ||
+            index >= evidenceFiles.length
+        ) {
+            return;
+        }
+
+        const item = evidenceFiles[index];
+
+        if (item.previewUrl) {
+            URL.revokeObjectURL(item.previewUrl);
+        }
+
+        evidenceFiles.splice(index, 1);
+
+        renderEvidencePhotos();
+    }
+
+    chooseEvidencePhotoButton.addEventListener(
+        "click",
+        function () {
+            if (evidenceFiles.length >= 4) {
+                alert("Maximum 4 evidence photos allowed.");
+                return;
+            }
+
+            evidencePhotoInput.click();
+        }
+    );
+
+    evidencePhotoInput.addEventListener(
+        "change",
+        function () {
+            const files =
+                Array.from(
+                    evidencePhotoInput.files || []
+                );
+
+            if (files.length === 0) {
+                return;
+            }
+
+            const remainingSlots =
+                4 - evidenceFiles.length;
+
+            const filesToAdd =
+                files.slice(0, remainingSlots);
+
+            if (files.length > remainingSlots) {
+                alert("Only 4 evidence photos are allowed. Extra files were not added.");
+            }
+
+            filesToAdd.forEach(function (file) {
+                if (!file.type.startsWith("image/")) {
+                    return;
+                }
+
+                evidenceFiles.push({
+                    file: file,
+                    previewUrl: URL.createObjectURL(file)
+                });
+            });
+
+            evidencePhotoInput.value = "";
+
+            renderEvidencePhotos();
+        }
+    );
+
+    document.getElementById("monumentStatus")
+        .addEventListener(
+            "change",
+            function () {
+                // A pending evidence set belongs to the status currently
+                // selected in the form. Clear it when the status changes.
+                resetEvidencePhotos();
+                updateEvidenceSection();
+            }
         );
 
+    async function uploadEvidencePhotos(pointCode) {
+        if (evidenceFiles.length === 0) {
+            return [];
+        }
+
+        evidenceUploading = true;
+        renderEvidencePhotos();
+
+        const uploaded = [];
+
+        try {
+            for (
+                let index = 0;
+                index < evidenceFiles.length;
+                index++
+            ) {
+                const item = evidenceFiles[index];
+                const file = item.file;
+
+                const extension =
+                    getFileExtension(file.name);
+
+                const fileName =
+                    pointCode +
+                    "_history_evidence_" +
+                    Date.now() +
+                    "_" +
+                    (index + 1) +
+                    extension;
+
+                const formData = new FormData();
+
+                formData.append(
+                    "fileName",
+                    fileName
+                );
+
+                formData.append(
+                    "file",
+                    file,
+                    fileName
+                );
+
+                evidencePhotoStatus.textContent =
+                    "Uploading evidence photo " +
+                    (index + 1) +
+                    " of " +
+                    evidenceFiles.length +
+                    "...";
+
+                const response =
+                    await fetch(
+                        IMAGEKIT_UPLOAD_ENDPOINT,
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+                const responseText =
+                    await response.text();
+
+                let result;
+
+                try {
+                    result = JSON.parse(responseText);
+                } catch {
+                    throw new Error(
+                        "ImageKit returned invalid JSON."
+                    );
+                }
+
+                if (!response.ok) {
+                    throw new Error(
+                        result.error ||
+                        result.message ||
+                        "Evidence upload failed. HTTP " +
+                        response.status
+                    );
+                }
+
+                if (!result.url) {
+                    throw new Error(
+                        "ImageKit did not return an evidence image URL."
+                    );
+                }
+
+                const uploadedPhoto = {
+                    url: result.url,
+                    fileId: result.fileId || ""
+                };
+
+                uploaded.push(uploadedPhoto);
+                uploadedEvidencePhotos.push(uploadedPhoto);
+            }
+
+            return uploaded;
+
+        } finally {
+            evidenceUploading = false;
+            renderEvidencePhotos();
+        }
+    }
+
+    async function cleanupUploadedEvidencePhotos() {
+        const fileIds = [
+            ...new Set(
+                uploadedEvidencePhotos
+                    .map(function (photo) {
+                        return photo.fileId;
+                    })
+                    .filter(Boolean)
+            )
+        ];
+
+        for (const fileId of fileIds) {
+            try {
+                await deletePhotoFromImageKit(fileId);
+            } catch (error) {
+                console.warn(
+                    "Could not delete uploaded evidence photo:",
+                    fileId,
+                    error
+                );
+            }
+        }
+
+        uploadedEvidencePhotos = [];
     }
 
 
-    showStatus(
-        "Control point updated successfully.",
-        "success"
-    );
+    /* =========================================================
+       OPEN ADD MODAL
+       ========================================================= */
+
+    function openAddModal() {
+        editingId = null;
+
+        document.getElementById("modalTitle").textContent =
+            "Add Control Point";
+
+        form.reset();
+
+        document.getElementById("monumentStatus").value =
+            "Not Inspected";
+
+        document.getElementById("observationDate").value = "";
+
+        setFormValidationError("");
+
+        resetMonumentGallery();
+        resetEvidencePhotos();
+
+        modal.classList.add("active");
+    }
 
 
-} else {
+    /* =========================================================
+       OPEN EDIT MODAL
+       ========================================================= */
 
-    // Add new control point
-    const newPoint =
-        await addDoc(
-            controlPointsRef,
-            data
-        );
+    function openEditModal(id) {
+        const point = controlPoints.find(function (item) {
+            return item.id === id;
+        });
+
+        if (!point) return;
+
+        editingId = id;
+
+        document.getElementById("modalTitle").textContent =
+            "Edit Control Point";
+
+        document.getElementById("pointCode").value =
+            point.pointCode || "";
+
+        document.getElementById("pointType").value =
+            point.pointType || "";
+
+        document.getElementById("monumentStatus").value =
+            point.monumentStatus || "Not Inspected";
+
+        document.getElementById("observationDate").value = "";
+
+        document.getElementById("latitude").value =
+            Number.isFinite(point.latitude)
+                ? point.latitude
+                : "";
+
+        document.getElementById("longitude").value =
+            Number.isFinite(point.longitude)
+                ? point.longitude
+                : "";
+
+        document.getElementById("northing").value =
+            Number.isFinite(point.northing)
+                ? point.northing
+                : "";
+
+        document.getElementById("easting").value =
+            Number.isFinite(point.easting)
+                ? point.easting
+                : "";
+
+        document.getElementById("elevation").value =
+            Number.isFinite(point.elevation)
+                ? point.elevation
+                : "";
+
+        document.getElementById("description").value =
+            point.description || "";
+
+        document.getElementById("imageUrl").value =
+            point.imageUrl || "";
+
+        document.getElementById("imageFileId").value =
+            point.imageFileId || "";
+
+        document.getElementById("imageUrls").value =
+            JSON.stringify(point.imageUrls || []);
+
+        setFormValidationError("");
+
+        loadMonumentGallery(point);
+        resetEvidencePhotos();
+
+        modal.classList.add("active");
+    }
 
 
-    // Create the first history record
-    const initialStatus =
-        document.getElementById(
-            "monumentStatus"
-        ).value ||
-        "Not Inspected";
+    document.getElementById("addButton")
+        .addEventListener("click", openAddModal);
 
 
-    await addMonumentHistory(
-        newPoint.id,
-        initialStatus,
-        "Initial monument status recorded"
-    );
+    /* =========================================================
+       SAVE FORM
+       ========================================================= */
 
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-    showStatus(
-        "Control point added successfully.",
-        "success"
-    );
+        if (galleryUploading) {
+            setFormValidationError(
+                "Please wait until the photo upload is finished."
+            );
+            return;
+        }
 
-}
-/* =========================================
-   VIEW MONUMENT HISTORY
-========================================= */
+        if (!validateControlPointForm()) {
+            return;
+        }
 
+        saveButton.disabled = true;
+        setFormValidationError("");
 
-            closeModal();
+        const newStatus =
+            document.getElementById("monumentStatus").value ||
+            "Not Inspected";
+
+        const observationDateValue =
+            document.getElementById("observationDate").value;
+
+        let historyEvidencePhotos = [];
+
+        try {
+            const data = {
+                pointCode:
+                    document.getElementById("pointCode").value.trim(),
+
+                pointType:
+                    document.getElementById("pointType").value,
+
+                monumentStatus:
+                    newStatus,
+
+                latitude:
+                    Number(document.getElementById("latitude").value),
+
+                longitude:
+                    Number(document.getElementById("longitude").value),
+
+                northing:
+                    Number(document.getElementById("northing").value),
+
+                easting:
+                    Number(document.getElementById("easting").value),
+
+                elevation:
+                    Number(document.getElementById("elevation").value),
+
+                description:
+                    document.getElementById("description").value.trim(),
+
+                imageUrls:
+                    monumentPhotos.map(function (photo) {
+                        return {
+                            url: photo.url,
+                            fileId: photo.fileId || ""
+                        };
+                    })
+            };
+
+            /*
+             * IMPORTANT:
+             * deleteField() can only be used with updateDoc()
+             * when updating an existing Firestore document.
+             *
+             * For a NEW document created with addDoc(), simply
+             * omit imageUrl/imageFileId when there are no photos.
+             */
+            if (monumentPhotos.length > 0) {
+                data.imageUrl = monumentPhotos[0].url;
+                data.imageFileId = monumentPhotos[0].fileId || "";
+            }
+
+            if (editingId) {
+                const existingPoint = controlPoints.find(function (point) {
+                    return point.id === editingId;
+                });
+
+                const oldStatus =
+                    existingPoint?.monumentStatus ||
+                    "Not Inspected";
+
+                const statusChanged =
+                    newStatus !== oldStatus;
+
+                if (
+                    statusChanged &&
+                    statusNeedsEvidence(newStatus) &&
+                    evidenceFiles.length === 0
+                ) {
+                    setFormValidationError(
+                        "Please add at least 1 evidence photo for " +
+                        newStatus +
+                        "."
+                    );
+                    saveButton.disabled = false;
+                    updateEvidenceSection();
+                    return;
+                }
+
+                if (statusChanged && !observationDateValue) {
+                    setFormValidationError(
+                        "Please select the Observation Date when changing Monument Status."
+                    );
+                    saveButton.disabled = false;
+                    return;
+                }
+
+                if (statusChanged) {
+                    historyEvidencePhotos =
+                        await uploadEvidencePhotos(
+                            data.pointCode
+                        );
+                }
+
+                await updateDoc(
+                    doc(db, "control_points", editingId),
+                    data
+                );
+
+                if (statusChanged) {
+                    await addMonumentHistory(
+                        editingId,
+                        newStatus,
+                        "Monument status changed from " +
+                        oldStatus +
+                        " to " +
+                        newStatus,
+                        observationDateValue,
+                        historyEvidencePhotos
+                    );
+                }
+
+                await deleteRemovedGalleryPhotos();
+
+                showStatus(
+                    "Control point updated successfully.",
+                    "success"
+                );
+
+            } else {
+                if (
+                    newStatus !== "Not Inspected" &&
+                    !observationDateValue
+                ) {
+                    setFormValidationError(
+                        "Please select the Observation Date for the selected Monument Status."
+                    );
+                    saveButton.disabled = false;
+                    return;
+                }
+
+                if (
+                    statusNeedsEvidence(newStatus) &&
+                    evidenceFiles.length === 0
+                ) {
+                    setFormValidationError(
+                        "Please add at least 1 evidence photo for " +
+                        newStatus +
+                        "."
+                    );
+                    saveButton.disabled = false;
+                    updateEvidenceSection();
+                    return;
+                }
+
+                if (newStatus !== "Not Inspected") {
+                    historyEvidencePhotos =
+                        await uploadEvidencePhotos(
+                            data.pointCode
+                        );
+                }
+
+                const newPoint =
+                    await addDoc(controlPointsRef, data);
+
+                if (newStatus !== "Not Inspected") {
+                    await addMonumentHistory(
+                        newPoint.id,
+                        newStatus,
+                        "Initial monument status recorded",
+                        observationDateValue,
+                        historyEvidencePhotos
+                    );
+                }
+
+                showStatus(
+                    "Control point added successfully.",
+                    "success"
+                );
+            }
+
+            newGalleryUploads = [];
+            removedGalleryPhotos = [];
+
+            evidenceFiles.forEach(function (item) {
+                if (item.previewUrl) {
+                    URL.revokeObjectURL(item.previewUrl);
+                }
+            });
+            evidenceFiles = [];
+            uploadedEvidencePhotos = [];
+
+            closeModal(true);
 
             await loadControlPoints();
 
         } catch (error) {
+            console.error("Firestore save error:", error);
 
-            console.error(
-                "Firestore save error:",
-                error
-            );
+            await cleanupUploadedEvidencePhotos();
 
             showStatus(
-                "Firestore error: " +
-                error.message,
+                "Save failed: " + error.message,
                 "error"
             );
 
         } finally {
-
-            saveButton.disabled =
-                false;
-
+            saveButton.disabled = false;
         }
-
-    }
-);
+    });
 
 
-    /* =========================================
+    /* =========================================================
        DELETE CONTROL POINT
-       ========================================= */
+       ========================================================= */
 
-    async function deletePoint(
-        id
-    ) {
+    async function deletePoint(id) {
+        const point = controlPoints.find(function (item) {
+            return item.id === id;
+        });
 
-        const point =
-            controlPoints.find(
-                function (item) {
+        if (!point) return;
 
-                    return item.id === id;
+        const confirmed = confirm(
+            "Delete " +
+            point.pointCode +
+            " from Firestore?\n\nThis will also delete its stored monument photos from ImageKit and its monument history subcollection."
+        );
 
-                }
-            );
-
-
-        if (!point) {
-
-            return;
-
-        }
-
-
-        const confirmed =
-            confirm(
-
-                "Delete " +
-                point.pointCode +
-                " from Firestore?"
-
-            );
-
-
-        if (!confirmed) {
-
-            return;
-
-        }
-
+        if (!confirmed) return;
 
         try {
+            const fileIds = [];
 
-            /*
-             * If the CP has an ImageKit photo,
-             * delete the ImageKit file first.
-             */
-
-            if (
-                point.imageFileId
-            ) {
-
-                setGlobalDeleteStatus(
-                    "Deleting control point photo..."
-                );
-
-
-                await deletePhotoFromImageKit(
-                    point.imageFileId
-                );
-
+            if (Array.isArray(point.imageUrls)) {
+                point.imageUrls.forEach(function (photo) {
+                    if (photo && photo.fileId) {
+                        fileIds.push(photo.fileId);
+                    }
+                });
             }
 
+            if (
+                fileIds.length === 0 &&
+                point.imageFileId
+            ) {
+                fileIds.push(point.imageFileId);
+            }
 
-            /*
-             * Delete Firestore document.
-             */
+            for (const fileId of [...new Set(fileIds)]) {
+                try {
+                    await deletePhotoFromImageKit(fileId);
+                } catch (photoError) {
+                    console.warn(
+                        "ImageKit photo deletion failed:",
+                        photoError
+                    );
+                }
+            }
 
-            await deleteDoc(
-
-                doc(
-                    db,
-                    "control_points",
-                    id
-                )
-
+            // Delete history records first.
+            const historyRef = collection(
+                db,
+                "control_points",
+                id,
+                "monument_history"
             );
 
+            const historySnapshot = await getDocs(historyRef);
+
+            for (const historyDoc of historySnapshot.docs) {
+                await deleteDoc(historyDoc.ref);
+            }
+
+            await deleteDoc(
+                doc(db, "control_points", id)
+            );
 
             showStatus(
-                point.pointCode +
-                " deleted successfully.",
+                point.pointCode + " deleted successfully.",
                 "success"
             );
 
-
             await loadControlPoints();
 
-
         } catch (error) {
-
             console.error(
                 "Control point delete error:",
                 error
             );
 
-
             showStatus(
-                "Delete failed: " +
-                error.message,
+                "Delete failed: " + error.message,
                 "error"
             );
-
         }
-
     }
 
 
-    function setGlobalDeleteStatus(
-        message
+    /* =========================================================
+       MONUMENT HISTORY
+       ========================================================= */
+
+    async function addMonumentHistory(
+        pointId,
+        statusValue,
+        remarksValue,
+        observationDateValue,
+        evidencePhotos
     ) {
-
-        showStatus(
-            message,
-            "success"
-        );
-
-    }
-   async function addMonumentHistory(
-    pointId,
-    statusValue,
-    remarksValue,
-    observationDateValue
-) {
-
-    const historyRef =
-        collection(
+        const historyRef = collection(
             db,
             "control_points",
             pointId,
             "monument_history"
         );
 
-    await addDoc(
-        historyRef,
-        {
-            status:
-                statusValue,
-
-            remarks:
-                remarksValue || "",
-
-            observationDate:
-                observationDateValue
-                    ? new Date(
-                        observationDateValue +
-                        "T12:00:00"
-                    )
-                    : new Date(),
-
-            // Automatic date/time when the admin updates the status.
-            date:
-                serverTimestamp()
-        }
-    );
-
-}
-
-window.deleteMonumentHistory = async function(
-    pointId,
-    historyId
-) {
-
-    const confirmed =
-        window.confirm(
-            "Delete this monument history record?\n\nThis action cannot be undone."
-        );
-
-    if (!confirmed) {
-        return;
-    }
-
-    try {
-
-        await deleteDoc(
-            doc(
-                db,
-                "control_points",
-                pointId,
-                "monument_history",
-                historyId
-            )
-        );
-
-        window.alert(
-            "History record deleted successfully."
-        );
-
-        await window.viewHistory(
-            pointId
-        );
-
-    } catch (error) {
-
-        console.error(
-            "History delete error:",
-            error
-        );
-
-        window.alert(
-            "Failed to delete history record: " +
-            error.message
-        );
-
-    }
-
-};
-
-
-/* =========================================
-   VIEW MONUMENT HISTORY
-========================================= */
-
-window.viewHistory = async function(
-    pointId
-) {
-
-    const historyModal =
-        document.getElementById(
-            "historyModal"
-        );
-
-    const historyContent =
-        document.getElementById(
-            "historyContent"
-        );
-
-    const historyTitle =
-        document.getElementById(
-            "historyTitle"
-        );
-
-    const historySubtitle =
-        document.getElementById(
-            "historySubtitle"
-        );
-
-    const point =
-        controlPoints.find(
-            function (item) {
-                return item.id === pointId;
+        await addDoc(
+            historyRef,
+            {
+                status: statusValue,
+                remarks: remarksValue || "",
+                observationDate:
+                    observationDateValue
+                        ? new Date(
+                            observationDateValue +
+                            "T12:00:00"
+                        )
+                        : new Date(),
+                evidencePhotos:
+                    Array.isArray(evidencePhotos)
+                        ? evidencePhotos.map(function (photo) {
+                            return {
+                                url: photo.url,
+                                fileId: photo.fileId || ""
+                            };
+                        })
+                        : [],
+                date: serverTimestamp()
             }
         );
-
-    if (!point) {
-        return;
     }
 
-    historyTitle.textContent =
-        "Monument History";
 
-    historySubtitle.textContent =
-        point.pointCode +
-        " • " +
-        (point.pointType || "Control Point");
 
-    historyModal.classList.add(
-        "active"
-    );
+    function openHistoryPhotoViewer(url) {
+        let viewer =
+            document.getElementById(
+                "historyPhotoViewer"
+            );
 
-    historyContent.innerHTML = `
-        <p
-            style="
-                text-align:center;
-                color:#64748b;
-                padding:25px;
-            "
-        >
-            Loading history...
-        </p>
-    `;
+        if (!viewer) {
+            viewer = document.createElement("div");
+            viewer.id = "historyPhotoViewer";
+            viewer.className = "history-photo-viewer";
 
-    try {
+            viewer.innerHTML = `
+                <button
+                    type="button"
+                    class="history-photo-viewer-close"
+                    aria-label="Close evidence photo"
+                >
+                    ×
+                </button>
 
-        const historyRef =
-            collection(
+                <img
+                    src=""
+                    alt="History evidence photo"
+                >
+            `;
+
+            document.body.appendChild(viewer);
+
+            viewer
+                .querySelector(".history-photo-viewer-close")
+                .addEventListener(
+                    "click",
+                    function () {
+                        viewer.classList.remove("active");
+                    }
+                );
+
+            viewer.addEventListener(
+                "click",
+                function (event) {
+                    if (event.target === viewer) {
+                        viewer.classList.remove("active");
+                    }
+                }
+            );
+        }
+
+        viewer.querySelector("img").src = url;
+        viewer.classList.add("active");
+    }
+
+
+    window.viewHistory = async function (pointId) {
+        const historyModal =
+            document.getElementById("historyModal");
+
+        const historyContent =
+            document.getElementById("historyContent");
+
+        const historyTitle =
+            document.getElementById("historyTitle");
+
+        const historySubtitle =
+            document.getElementById("historySubtitle");
+
+        const point = controlPoints.find(function (item) {
+            return item.id === pointId;
+        });
+
+        if (!point) return;
+
+        historyTitle.textContent =
+            "Monument History";
+
+        historySubtitle.textContent =
+            point.pointCode +
+            " • " +
+            (point.pointType || "Control Point");
+
+        historyModal.classList.add("active");
+
+        historyContent.innerHTML = `
+            <p style="text-align:center;color:#64748b;padding:25px;">
+                Loading history...
+            </p>
+        `;
+
+        try {
+            const historyRef = collection(
                 db,
                 "control_points",
                 pointId,
                 "monument_history"
             );
 
-        const snapshot =
-            await getDocs(
-                historyRef
-            );
+            const snapshot = await getDocs(historyRef);
 
-        if (snapshot.empty) {
+            if (snapshot.empty) {
+                historyContent.innerHTML = `
+                    <div style="text-align:center;color:#64748b;padding:30px;">
+                        No monument history available.
+                    </div>
+                `;
+                return;
+            }
+
+            const records = snapshot.docs.map(function (historyDoc) {
+                return {
+                    id: historyDoc.id,
+                    ...historyDoc.data()
+                };
+            });
+
+            records.sort(function (a, b) {
+                const aDate = getHistoryDate(a.observationDate);
+                const bDate = getHistoryDate(b.observationDate);
+
+                return bDate - aDate;
+            });
+
+            historyContent.innerHTML = records.map(function (record) {
+                const observationDate =
+                    getHistoryDate(record.observationDate);
+
+                const updatedDate =
+                    getHistoryDate(record.date);
+
+                const observationText =
+                    observationDate.getTime() > 0
+                        ? observationDate.toLocaleDateString(
+                            "en-MY",
+                            {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric"
+                            }
+                        )
+                        : "Date unavailable";
+
+                const updatedText =
+                    updatedDate.getTime() > 0
+                        ? updatedDate.toLocaleString(
+                            "en-MY",
+                            {
+                                dateStyle: "medium",
+                                timeStyle: "short"
+                            }
+                        )
+                        : "Pending server timestamp";
+
+                return `
+                    <div
+                        style="
+                            border-left:4px solid #1769d1;
+                            background:#f8fbff;
+                            padding:15px;
+                            margin-bottom:12px;
+                            border-radius:8px;
+                        "
+                    >
+
+                        <div style="margin-bottom:8px;">
+                            ${getStatusBadge(record.status)}
+                        </div>
+
+                        <div
+                            style="
+                                font-size:12px;
+                                color:#64748b;
+                                margin-bottom:8px;
+                                line-height:1.7;
+                            "
+                        >
+                            <strong>Observation Date:</strong>
+                            ${observationText}
+                            <br>
+                            <strong>Updated:</strong>
+                            ${updatedText}
+                        </div>
+
+                        <div
+                            style="
+                                font-size:13px;
+                                color:#334155;
+                                line-height:1.5;
+                            "
+                        >
+                            ${escapeHTML(
+                                record.remarks || "No remarks"
+                            )}
+                        </div>
+
+                        ${
+                            Array.isArray(record.evidencePhotos) &&
+                            record.evidencePhotos.length > 0
+                                ? `
+                                    <div class="history-evidence">
+                                        <div class="history-evidence-title">
+                                            Evidence Photos (${record.evidencePhotos.length})
+                                        </div>
+
+                                        <div class="history-evidence-gallery">
+                                            ${
+                                                record.evidencePhotos
+                                                    .filter(function (photo) {
+                                                        return photo && photo.url;
+                                                    })
+                                                    .map(function (photo, index) {
+                                                        return `
+                                                            <img
+                                                                src="${escapeAttribute(photo.url)}"
+                                                                class="history-evidence-photo"
+                                                                alt="History Evidence ${index + 1}"
+                                                                data-history-photo-url="${escapeAttribute(photo.url)}"
+                                                            >
+                                                        `;
+                                                    })
+                                                    .join("")
+                                            }
+                                        </div>
+                                    </div>
+                                  `
+                                : `
+                                    <div
+                                        style="
+                                            margin-top:10px;
+                                            color:#94a3b8;
+                                            font-size:11px;
+                                        "
+                                    >
+                                        No evidence photos attached.
+                                    </div>
+                                  `
+                        }
+
+                        <button
+                            type="button"
+                            class="delete-history-btn"
+                            onclick="deleteMonumentHistory('${escapeAttribute(pointId)}','${escapeAttribute(record.id)}')"
+                        >
+                            DELETE
+                        </button>
+
+                    </div>
+                `;
+            }).join("");
+
+            historyContent
+                .querySelectorAll(".history-evidence-photo")
+                .forEach(function (photoElement) {
+                    photoElement.addEventListener(
+                        "click",
+                        function () {
+                            openHistoryPhotoViewer(
+                                photoElement.dataset.historyPhotoUrl
+                            );
+                        }
+                    );
+                });
+
+        } catch (error) {
+            console.error(
+                "History loading error:",
+                error
+            );
 
             historyContent.innerHTML = `
                 <div
                     style="
                         text-align:center;
-                        color:#64748b;
+                        color:#991b1b;
                         padding:30px;
                     "
                 >
-                    No monument history available.
+                    Unable to load monument history.
+                    <br><br>
+                    ${escapeHTML(error.message)}
                 </div>
             `;
-
-            return;
         }
-
-        const historyRecords = [];
-
-        snapshot.forEach(
-            function (historyDoc) {
-
-                historyRecords.push({
-
-                    id:
-                        historyDoc.id,
-
-                    ...historyDoc.data()
-
-                });
-
-            }
-        );
-
-        historyRecords.sort(
-            function (a, b) {
-
-                const dateA =
-                    a.date?.toDate
-                        ? a.date.toDate()
-                        : new Date(0);
-
-                const dateB =
-                    b.date?.toDate
-                        ? b.date.toDate()
-                        : new Date(0);
-
-                return dateB - dateA;
-
-            }
-        );
-
-        historyContent.innerHTML =
-            historyRecords
-                .map(
-                    function (record) {
-
-                        const observationDate =
-                            record.observationDate?.toDate
-                                ? record.observationDate.toDate()
-                                : null;
-
-                        const updatedDate =
-                            record.date?.toDate
-                                ? record.date.toDate()
-                                : null;
-
-                        const formattedObservationDate =
-                            observationDate
-                                ? observationDate.toLocaleDateString(
-                                    "en-MY",
-                                    {
-                                        day: "2-digit",
-                                        month: "2-digit",
-                                        year: "numeric"
-                                    }
-                                )
-                                : "Date unavailable";
-
-                        const formattedUpdatedDate =
-                            updatedDate
-                                ? updatedDate.toLocaleString(
-                                    "en-MY",
-                                    {
-                                        dateStyle: "medium",
-                                        timeStyle: "short"
-                                    }
-                                )
-                                : "Date unavailable";
-
-                        return `
-
-                            <div
-                                style="
-                                    border-left:4px solid #1769d1;
-                                    background:#f8fbff;
-                                    padding:15px;
-                                    margin-bottom:12px;
-                                    border-radius:8px;
-                                "
-                            >
-
-                                <div
-                                    style="
-                                        margin-bottom:8px;
-                                    "
-                                >
-                                    ${getStatusBadge(
-                                        record.status
-                                    )}
-                                </div>
-
-                                <div
-                                    style="
-                                        font-size:12px;
-                                        color:#64748b;
-                                        margin-bottom:8px;
-                                        line-height:1.7;
-                                    "
-                                >
-
-                                    <strong>
-                                        Observation Date:
-                                    </strong>
-
-                                    ${formattedObservationDate}
-
-                                    <br>
-
-                                    <strong>
-                                        Updated:
-                                    </strong>
-
-                                    ${formattedUpdatedDate}
-
-                                </div>
-
-                                <div
-                                    style="
-                                        font-size:13px;
-                                        color:#334155;
-                                        line-height:1.5;
-                                    "
-                                >
-                                    ${
-                                        escapeHTML(
-                                            record.remarks ||
-                                            "No remarks"
-                                        )
-                                    }
-                                </div>
-
-                                <button
-                                    type="button"
-                                    class="delete-history-btn"
-                                    onclick="
-                                        deleteMonumentHistory(
-                                            '${escapeAttribute(pointId)}',
-                                            '${escapeAttribute(record.id)}'
-                                        )
-                                    "
-                                >
-                                    DELETE
-                                </button>
-
-                            </div>
-
-                        `;
-
-                    }
-                )
-                .join("");
-
-    } catch (error) {
-
-        console.error(
-            "History loading error:",
-            error
-        );
-
-        historyContent.innerHTML = `
-            <div
-                style="
-                    text-align:center;
-                    color:#991b1b;
-                    padding:30px;
-                "
-            >
-                Unable to load monument history.
-                <br><br>
-                ${escapeHTML(error.message)}
-            </div>
-        `;
-
-    }
-
-};
-
-
-window.closeHistoryModal =
-    function() {
-
-        document.getElementById(
-            "historyModal"
-        ).classList.remove(
-            "active"
-        );
-
     };
 
 
+    function getHistoryDate(value) {
+        if (value?.toDate) {
+            return value.toDate();
+        }
 
-    /* =========================================
-       CLOSE MODAL
-       ========================================= */
+        if (value instanceof Date) {
+            return value;
+        }
 
-    function closeModal() {
+        if (value) {
+            const parsed = new Date(value);
 
-        modal.classList.remove(
-            "active"
+            if (!Number.isNaN(parsed.getTime())) {
+                return parsed;
+            }
+        }
+
+        return new Date(0);
+    }
+
+
+    window.deleteMonumentHistory = async function (
+        pointId,
+        historyId
+    ) {
+        const confirmed = confirm(
+            "Delete this monument history record?\n\nThis action cannot be undone."
         );
 
+        if (!confirmed) return;
 
-        editingId =
-            null;
+        try {
+            const historyDocument =
+                await getDocs(
+                    collection(
+                        db,
+                        "control_points",
+                        pointId,
+                        "monument_history"
+                    )
+                );
+
+            const historyRecord =
+                historyDocument.docs.find(function (item) {
+                    return item.id === historyId;
+                });
+
+            if (historyRecord) {
+                const historyData = historyRecord.data();
+
+                const evidenceFileIds =
+                    Array.isArray(historyData.evidencePhotos)
+                        ? historyData.evidencePhotos
+                            .map(function (photo) {
+                                return photo && photo.fileId;
+                            })
+                            .filter(Boolean)
+                        : [];
+
+                for (const fileId of [
+                    ...new Set(evidenceFileIds)
+                ]) {
+                    try {
+                        await deletePhotoFromImageKit(fileId);
+                    } catch (photoError) {
+                        console.warn(
+                            "Could not delete history evidence photo:",
+                            fileId,
+                            photoError
+                        );
+                    }
+                }
+            }
+
+            await deleteDoc(
+                doc(
+                    db,
+                    "control_points",
+                    pointId,
+                    "monument_history",
+                    historyId
+                )
+            );
+
+            showStatus(
+                "History record deleted successfully.",
+                "success"
+            );
+
+            await window.viewHistory(pointId);
+
+        } catch (error) {
+            console.error(
+                "History delete error:",
+                error
+            );
+
+            showStatus(
+                "Failed to delete history record: " +
+                error.message,
+                "error"
+            );
+        }
+    };
 
 
-        selectedPhotoFile =
-            null;
+    window.closeHistoryModal = function () {
+        document.getElementById(
+            "historyModal"
+        ).classList.remove("active");
+    };
 
-        photoWasDeleted =
-            false;
+
+    /* =========================================================
+       CLOSE ADD / EDIT MODAL
+       ========================================================= */
+
+    async function closeModal(saved) {
+        if (!saved && newGalleryUploads.length > 0) {
+            await cleanupNewGalleryUploads();
+        }
+
+        editingId = null;
+        monumentPhotos = [];
+        originalGalleryPhotos = [];
+        newGalleryUploads = [];
+        removedGalleryPhotos = [];
+        galleryUploading = false;
+
+        resetEvidencePhotos();
 
         setFormValidationError("");
 
         form.reset();
 
-        document.getElementById(
-            "observationDate"
-        ).value = "";
+        document.getElementById("monumentStatus").value =
+            "Not Inspected";
 
-        resetPhotoUI();
+        document.getElementById("observationDate").value = "";
 
-    }
-
-
-    document.getElementById(
-        "closeButton"
-    ).addEventListener(
-        "click",
-        closeModal
-    );
-
-
-    document.getElementById(
-        "cancelButton"
-    ).addEventListener(
-        "click",
-        closeModal
-    );
-
-
-    modal.addEventListener(
-        "click",
-        function (event) {
-
-            if (
-                event.target === modal
-            ) {
-
-                closeModal();
-
-            }
-
+        if (galleryPhotoInput) {
+            galleryPhotoInput.value = "";
         }
-    );
 
-    document.getElementById(
-    "historyCloseButton"
-).addEventListener(
-    "click",
-    function () {
+        renderMonumentPhotoGallery();
 
-        document.getElementById(
-            "historyModal"
-        ).classList.remove(
-            "active"
-        );
-
+        modal.classList.remove("active");
     }
-);
 
 
-    /* =========================================
+    document.getElementById("closeButton")
+        .addEventListener("click", function () {
+            closeModal(false);
+        });
+
+
+    document.getElementById("cancelButton")
+        .addEventListener("click", function () {
+            closeModal(false);
+        });
+
+
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            closeModal(false);
+        }
+    });
+
+
+    document.getElementById("historyCloseButton")
+        .addEventListener("click", function () {
+            window.closeHistoryModal();
+        });
+
+
+    document.getElementById("historyModal")
+        .addEventListener("click", function (event) {
+            if (event.target.id === "historyModal") {
+                window.closeHistoryModal();
+            }
+        });
+
+
+    /* =========================================================
        SEARCH
-       ========================================= */
+       ========================================================= */
 
     searchBox.addEventListener(
         "input",
@@ -4511,45 +4250,64 @@ window.closeHistoryModal =
     );
 
 
-    /* =========================================
+    /* =========================================================
+       ANALYTICS BUTTON
+       ========================================================= */
+
+    document.getElementById("analyticsButton")
+        .addEventListener("click", function () {
+            window.location.href = "admin-analytics.html";
+        });
+
+
+    /* =========================================================
        LOGOUT
-       ========================================= */
+       ========================================================= */
 
-    document.getElementById(
-        "logoutButton"
-    ).addEventListener(
-        "click",
-        async function () {
-
+    document.getElementById("logoutButton")
+        .addEventListener("click", async function () {
             try {
-
-                await signOut(
-                    auth
-                );
-
+                await signOut(auth);
             } catch (error) {
-
-                console.error(
-                    "Logout error:",
-                    error
-                );
-
+                console.error("Logout error:", error);
             }
 
+            sessionStorage.removeItem("intersurvAdmin");
+            window.location.href = "admin.html";
+        });
 
-            sessionStorage.removeItem(
-                "intersurvAdmin"
+
+    /* =========================================================
+       AUTHENTICATION GUARD
+       ========================================================= */
+
+    onAuthStateChanged(
+        auth,
+        function (user) {
+            if (!user) {
+                window.location.href = "admin.html";
+                return;
+            }
+
+            console.log(
+                "Authenticated admin:",
+                user.email
             );
 
-
-            window.location.href =
-                "admin.html";
-
+            loadControlPoints();
         }
     );
+
+
+    /* =========================================================
+       INITIAL GALLERY UI
+       ========================================================= */
+
+    resetMonumentGallery();
 
 </script>
 
 </body>
 
 </html>
+```
