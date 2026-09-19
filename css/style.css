@@ -2679,3 +2679,61 @@ h1 {
     }
 
 }
+/* =========================================
+   EXPORT BUTTON
+========================================= */
+
+.export-button {
+
+    border: none;
+
+    background: #1769d1;
+
+    color: white;
+
+    padding:
+        12px
+        20px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+    box-shadow:
+        0 4px 12px
+        rgba(23, 105, 209, 0.18);
+
+}
+
+.export-button:hover {
+
+    background: #1256ad;
+
+    transform:
+        translateY(-1px);
+
+}
+
+.export-button:active {
+
+    transform:
+        translateY(0);
+
+}
+
+.export-button:disabled {
+
+    background: #94a3b8;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
