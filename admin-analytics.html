@@ -4,6 +4,7 @@
 <head>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <meta charset="UTF-8">
 
@@ -114,6 +115,104 @@
         .back-button:hover {
             background: #1256ad;
         }
+
+/* =========================================
+   HEADER ACTIONS
+   ========================================= */
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* =========================================
+   EXPORT BUTTON
+   ========================================= */
+
+.export-button {
+
+    border: none;
+
+    background: #1769d1;
+
+    color: white;
+
+    padding: 11px 18px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+}
+
+
+.export-button:hover {
+
+    background: #1256ad;
+
+    transform: translateY(-1px);
+
+}
+
+
+.export-button:active {
+
+    transform: translateY(0);
+
+}
+
+
+.export-button:disabled {
+
+    background: #94a3b8;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+
+@media (max-width: 700px) {
+
+    .header {
+
+        height: auto;
+
+        min-height: 75px;
+
+        padding: 12px 15px;
+
+        gap: 10px;
+
+    }
+
+    .header-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .export-button,
+    .back-button {
+
+        font-size: 11px;
+
+        padding: 9px 12px;
+
+    }
+
+}
 
 
         /* =========================================
@@ -506,16 +605,26 @@
         InterSurv Analytics
     </h1>
 
-    <button
-            class="back-button"
-            id="backButton"
-    >
-        ← BACK TO DASHBOARD
-    </button>
+    <div class="header-actions">
+
+        <button
+                type="button"
+                id="exportButton"
+                class="export-button"
+        >
+            ⬇ EXPORT DATA
+        </button>
+
+        <button
+                class="back-button"
+                id="backButton"
+        >
+            ← BACK TO DASHBOARD
+        </button>
+
+    </div>
 
 </header>
-
-
 <main class="main">
 
 
@@ -966,23 +1075,812 @@
 
 <script type="module">
 
+    import {
+    db,
+    auth
+} from "./js/firebase-config.js";
+
+import {
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
+
+import {
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+
     /* =========================================
-       FIREBASE
-       ========================================= */
+   EXPORT DATA
+========================================= */
 
-    import {
-        db,
-        auth
-    } from "./js/firebase-config.js";
+let analyticsControlPoints = [];
 
-    import {
-        onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 
-    import {
-        collection,
-        getDocs
-    } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
+document.getElementById(
+    "exportButton"
+).addEventListener(
+    "click",
+    exportAnalyticsData
+);
+
+
+/* =========================================
+   EXPORT ANALYTICS DATA TO EXCEL
+========================================= */
+
+async function exportAnalyticsData() {
+
+    const exportButton =
+        document.getElementById(
+            "exportButton"
+        );
+
+    try {
+
+        exportButton.disabled = true;
+
+        exportButton.textContent =
+            "⏳ EXPORTING...";
+
+
+        /*
+         * Get all control points
+         */
+
+        const controlPointsSnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "control_points"
+                )
+            );
+
+
+        const controlPoints =
+            controlPointsSnapshot.docs.map(
+                function (document) {
+
+                    return {
+
+                        id:
+                            document.id,
+
+                        ...document.data()
+
+                    };
+
+                }
+            );
+
+
+        /*
+         * =====================================
+         * SHEET 1
+         * CONTROL POINTS
+         * =====================================
+         */
+
+        const controlPointRows =
+            controlPoints.map(
+                function (point) {
+
+                    return {
+
+                        "Point ID":
+                            point.pointCode || "",
+
+                        "Point Type":
+                            normalizePointType(
+                                point.pointType
+                            ),
+
+                        "Status":
+                            point.monumentStatus ||
+                            "Not Inspected",
+
+                        "Observation Date":
+                            formatExportDate(
+                                point.observationDate
+                            ),
+
+                        "Northing":
+                            point.northing ?? "",
+
+                        "Easting":
+                            point.easting ?? "",
+
+                        "Elevation":
+                            point.elevation ?? "",
+
+                        "Latitude":
+                            point.latitude ?? "",
+
+                        "Longitude":
+                            point.longitude ?? "",
+
+                        "Description":
+                            point.description || ""
+
+                    };
+
+                }
+            );
+
+
+        /*
+         * =====================================
+         * SHEET 2
+         * STATUS HISTORY
+         * =====================================
+         */
+
+        const historyRows = [];
+
+
+        for (
+            const point of controlPoints
+        ) {
+
+            const historySnapshot =
+                await getDocs(
+                    collection(
+                        db,
+                        "control_points",
+                        point.id,
+                        "monument_history"
+                    )
+                );
+
+
+            historySnapshot.forEach(
+                function (historyDocument) {
+
+                    const history =
+                        historyDocument.data();
+
+
+                    historyRows.push({
+
+                        "Point ID":
+                            point.pointCode || "",
+
+                        "Point Type":
+                            normalizePointType(
+                                point.pointType
+                            ),
+
+                        "Status":
+                            history.status ||
+                            "",
+
+                        "Observation Date":
+                            formatExportDate(
+                                history.observationDate
+                            ),
+
+                        "Remarks":
+                            history.remarks ||
+                            "",
+
+                        "Updated":
+                            formatExportDateTime(
+                                history.date
+                            )
+
+                    });
+
+                }
+            );
+
+        }
+
+
+        /*
+         * Sort history by Point ID
+         * and Observation Date
+         */
+
+        historyRows.sort(
+            function (a, b) {
+
+                const pointCompare =
+                    String(
+                        a["Point ID"]
+                    ).localeCompare(
+                        String(
+                            b["Point ID"]
+                        )
+                    );
+
+
+                if (
+                    pointCompare !== 0
+                ) {
+
+                    return pointCompare;
+
+                }
+
+
+                return (
+                    parseExportDate(
+                        a["Observation Date"]
+                    ) -
+
+                    parseExportDate(
+                        b["Observation Date"]
+                    )
+                );
+
+            }
+        );
+
+
+        /*
+         * =====================================
+         * SHEET 3
+         * SUMMARY
+         * =====================================
+         */
+
+        const summaryRows =
+            createExportSummary(
+                controlPoints,
+                historyRows
+            );
+
+
+        /*
+         * =====================================
+         * CREATE EXCEL WORKBOOK
+         * =====================================
+         */
+
+        const workbook =
+            XLSX.utils.book_new();
+
+
+        /*
+         * Control Points sheet
+         */
+
+        const controlPointSheet =
+            XLSX.utils.json_to_sheet(
+                controlPointRows
+            );
+
+
+        /*
+         * History sheet
+         */
+
+        const historySheet =
+            XLSX.utils.json_to_sheet(
+                historyRows
+            );
+
+
+        /*
+         * Summary sheet
+         */
+
+        const summarySheet =
+            XLSX.utils.json_to_sheet(
+                summaryRows
+            );
+
+
+        /*
+         * Add sheets
+         */
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            summarySheet,
+            "Summary"
+        );
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            controlPointSheet,
+            "Control Points"
+        );
+
+
+        XLSX.utils.book_append_sheet(
+            workbook,
+            historySheet,
+            "Status History"
+        );
+
+
+        /*
+         * Set column widths
+         */
+
+        controlPointSheet["!cols"] = [
+
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 32 },
+            { wch: 18 },
+            { wch: 18 },
+            { wch: 18 },
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 40 }
+
+        ];
+
+
+        historySheet["!cols"] = [
+
+            { wch: 15 },
+            { wch: 15 },
+            { wch: 35 },
+            { wch: 18 },
+            { wch: 55 },
+            { wch: 22 }
+
+        ];
+
+
+        summarySheet["!cols"] = [
+
+            { wch: 35 },
+            { wch: 20 }
+
+        ];
+
+
+        /*
+         * =====================================
+         * DOWNLOAD
+         * =====================================
+         */
+
+        const today =
+            new Date();
+
+
+        const dateString =
+            today
+                .toISOString()
+                .split("T")[0];
+
+
+        XLSX.writeFile(
+            workbook,
+            "InterSurv_Analytics_" +
+            dateString +
+            ".xlsx"
+        );
+
+
+        alert(
+            "Analytics data exported successfully."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Export error:",
+            error
+        );
+
+
+        alert(
+            "Failed to export analytics data.\n\n" +
+            error.message
+        );
+
+
+    } finally {
+
+        exportButton.disabled =
+            false;
+
+        exportButton.textContent =
+            "⬇ EXPORT DATA";
+
+    }
+
+}
+
+
+/* =========================================
+   EXPORT SUMMARY
+========================================= */
+
+function createExportSummary(
+    controlPoints,
+    historyRows
+) {
+
+    let good = 0;
+    let minor = 0;
+    let damaged = 0;
+    let critical = 0;
+    let replaced = 0;
+    let notInspected = 0;
+
+
+    controlPoints.forEach(
+        function (point) {
+
+            const status =
+                point.monumentStatus ||
+                "Not Inspected";
+
+
+            if (
+                status === "Good"
+            ) {
+
+                good++;
+
+            }
+            else if (
+                status === "Minor Damage"
+            ) {
+
+                minor++;
+
+            }
+            else if (
+                status === "Damaged"
+            ) {
+
+                damaged++;
+
+            }
+            else if (
+                status ===
+                "Critical / Replacement Required"
+            ) {
+
+                critical++;
+
+            }
+            else if (
+                status === "Replaced"
+            ) {
+
+                replaced++;
+
+            }
+            else {
+
+                notInspected++;
+
+            }
+
+        }
+    );
+
+
+    const pointTypeCounts = {
+
+        TBM: 0,
+        GCP: 0,
+        GPS: 0,
+        CRM: 0,
+        HSR: 0,
+        BKL: 0,
+        BK: 0
+
+    };
+
+
+    controlPoints.forEach(
+        function (point) {
+
+            const type =
+                normalizePointType(
+                    point.pointType
+                );
+
+
+            if (
+                pointTypeCounts[type]
+                !== undefined
+            ) {
+
+                pointTypeCounts[type]++;
+
+            }
+
+        }
+    );
+
+
+    return [
+
+        {
+            "Category":
+                "TOTAL CONTROL POINTS",
+
+            "Value":
+                controlPoints.length
+        },
+
+        {
+            "Category":
+                "TOTAL STATUS CHANGES",
+
+            "Value":
+                historyRows.length
+        },
+
+        {
+            "Category":
+                "GOOD",
+
+            "Value":
+                good
+        },
+
+        {
+            "Category":
+                "MINOR DAMAGE",
+
+            "Value":
+                minor
+        },
+
+        {
+            "Category":
+                "DAMAGED",
+
+            "Value":
+                damaged
+        },
+
+        {
+            "Category":
+                "CRITICAL / REPLACEMENT REQUIRED",
+
+            "Value":
+                critical
+        },
+
+        {
+            "Category":
+                "REPLACED",
+
+            "Value":
+                replaced
+        },
+
+        {
+            "Category":
+                "NOT INSPECTED",
+
+            "Value":
+                notInspected
+        },
+
+        {
+            "Category":
+                "TBM",
+
+            "Value":
+                pointTypeCounts.TBM
+        },
+
+        {
+            "Category":
+                "GCP",
+
+            "Value":
+                pointTypeCounts.GCP
+        },
+
+        {
+            "Category":
+                "GPS",
+
+            "Value":
+                pointTypeCounts.GPS
+        },
+
+        {
+            "Category":
+                "CRM",
+
+            "Value":
+                pointTypeCounts.CRM
+        },
+
+        {
+            "Category":
+                "HSR",
+
+            "Value":
+                pointTypeCounts.HSR
+        },
+
+        {
+            "Category":
+                "BKL",
+
+            "Value":
+                pointTypeCounts.BKL
+        },
+
+        {
+            "Category":
+                "BK",
+
+            "Value":
+                pointTypeCounts.BK
+        }
+
+    ];
+
+}
+
+
+/* =========================================
+   EXPORT DATE HELPERS
+========================================= */
+
+function formatExportDate(
+    value
+) {
+
+    if (!value) {
+        return "";
+    }
+
+
+    let date;
+
+
+    if (
+        typeof value.toDate ===
+        "function"
+    ) {
+
+        date =
+            value.toDate();
+
+    }
+    else {
+
+        date =
+            new Date(value);
+
+    }
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    return (
+
+        String(
+            date.getDate()
+        ).padStart(2, "0") +
+
+        "/" +
+
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0") +
+
+        "/" +
+
+        date.getFullYear()
+
+    );
+
+}
+
+
+function formatExportDateTime(
+    value
+) {
+
+    if (!value) {
+        return "";
+    }
+
+
+    let date;
+
+
+    if (
+        typeof value.toDate ===
+        "function"
+    ) {
+
+        date =
+            value.toDate();
+
+    }
+    else {
+
+        date =
+            new Date(value);
+
+    }
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    return (
+
+        formatExportDate(
+            date
+        ) +
+
+        " " +
+
+        String(
+            date.getHours()
+        ).padStart(2, "0") +
+
+        ":" +
+
+        String(
+            date.getMinutes()
+        ).padStart(2, "0")
+
+    );
+
+}
+
+
+function parseExportDate(
+    value
+) {
+
+    if (!value) {
+        return 0;
+    }
+
+
+    const parts =
+        String(value).split("/");
+
+
+    if (
+        parts.length !== 3
+    ) {
+
+        return 0;
+
+    }
+
+
+    return new Date(
+        Number(parts[2]),
+        Number(parts[1]) - 1,
+        Number(parts[0])
+    ).getTime();
+
+}
 
 
     /* =========================================
